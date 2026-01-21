@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class Ibatun {
     public static final String BOT_NAME = "Ibatun";
-    public static final String LINE = "――――――――――――――――――――――――――――――――――――――――――";
+    public static final String INDENT = "    ";
+    public static final String LINE = INDENT + "――――――――――――――――――――――――――――――――――――――――――";
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -11,7 +12,6 @@ public class Ibatun {
     }
 
     static String prompt() {
-        System.out.print("> ");
         return STDIN.nextLine();
     }
 
@@ -30,7 +30,7 @@ public class Ibatun {
         StringBuilder sb = new StringBuilder();
         sb.append(LINE).append("\n");
         for (String res : response) {
-            sb.append(res).append("\n");
+            sb.append(INDENT).append(res).append("\n");
         }
         sb.append(LINE).append("\n");
         System.out.print(sb.toString());
