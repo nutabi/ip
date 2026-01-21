@@ -7,17 +7,32 @@ public class Ibatun {
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
+        boolean exiting = false;
+        ArrayList<String> tasks = new ArrayList<>();
+
         greet();
-        // User input loop
-        while (true) {
+        while (!exiting) {
             String input = prompt();
-            if (input.equalsIgnoreCase("bye")) {
+            switch (input.toLowerCase()) {
+                case "bye":
+                    exiting = true;
+                    break;
+                case "list":
+                    handleList(tasks);
+                    break;
+                default:
+                    // Treat any other input as a task to be added
+                    tasks.add(input);
+                    respond(String.format("Got it. I've added this task: %s", input));
                 break;
             }
             // Echo user input for demonstration
             respond(input);
         }
         farewell();
+    }
+
+    static void handleList(ArrayList<String> tasks) {
     }
 
     static String prompt() {
