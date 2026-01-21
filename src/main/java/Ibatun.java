@@ -10,7 +10,7 @@ public class Ibatun {
 
     public static void main(String[] args) {
         boolean exiting = false;
-        ArrayList<String> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         greet();
         while (!exiting) {
@@ -24,7 +24,7 @@ public class Ibatun {
                     break;
                 default:
                     // Treat any other input as a task to be added
-                    tasks.add(input);
+                    tasks.add(new Task(input));
                     respond(String.format("Got it. I've added this task: %s", input));
                     break;
             }
@@ -32,7 +32,7 @@ public class Ibatun {
         farewell();
     }
 
-    static void handleList(ArrayList<String> tasks) {
+    static void handleList(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             respond("You have no tasks in your list.");
         } else {
