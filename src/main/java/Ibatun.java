@@ -8,6 +8,15 @@ public class Ibatun {
 
     public static void main(String[] args) {
         greet();
+        // User input loop
+        while (true) {
+            String input = prompt();
+            if (input.equalsIgnoreCase("bye")) {
+                break;
+            }
+            // Echo user input for demonstration
+            respond(input);
+        }
         farewell();
     }
 
