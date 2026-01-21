@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Ibatun {
     public static final String BOT_NAME = "Ibatun";
@@ -24,15 +26,21 @@ public class Ibatun {
                     // Treat any other input as a task to be added
                     tasks.add(input);
                     respond(String.format("Got it. I've added this task: %s", input));
-                break;
+                    break;
             }
-            // Echo user input for demonstration
-            respond(input);
         }
         farewell();
     }
 
     static void handleList(ArrayList<String> tasks) {
+        if (tasks.isEmpty()) {
+            respond("You have no tasks in your list.");
+        } else {
+            String[] indexedTasks = IntStream.range(0, tasks.size())
+                .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
+                .toArray(String[]::new);
+            respond(indexedTasks);
+        }
     }
 
     static String prompt() {
