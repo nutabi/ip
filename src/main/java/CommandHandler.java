@@ -21,7 +21,8 @@ public class CommandHandler {
                 "event", this::handleEvent,
                 "list", this::handleList,
                 "mark", this::handleMark,
-                "unmark", this::handleUnmark);
+                "unmark", this::handleUnmark,
+                "delete", this::handleDelete);
         this.onRespond = onRespond;
         this.tasks = new ArrayList<>();
     }
@@ -171,6 +172,22 @@ public class CommandHandler {
         Task t = tasks.get(idx);
         t.unmark();
         onRespond.accept("Bomb you, why never do properly?", new String[] { t.toString() });
+        return null;
+    }
+
+    private String handleDelete(String[] args) {
+        int idx;
+        try {
+            idx = Integer.parseInt(args[0]) - 1;
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            return TASK_NUM_ERROR;
+        }
+        if (idx < 0 || idx >= tasks.size()) {
+            return TASK_NUM_ERROR;
+        }
+
+        Task t = tasks.remove(idx);
+        onRespond.accept("Aight, I nuked it!", new String[] { t.toString(), getTaskCountMsg() });
         return null;
     }
 
