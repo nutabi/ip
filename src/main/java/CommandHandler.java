@@ -30,7 +30,7 @@ public class CommandHandler {
         // Dispatch to appropriate handler
         Consumer<String[]> action = commands.get(command);
         if (action != null) {
-            action.accept(input);
+            action.accept(java.util.Arrays.copyOfRange(input, 1, input.length));
         } else {
             onRespond.accept("I don't get what you mean :(", new String[0]);
         }
@@ -50,14 +50,14 @@ public class CommandHandler {
     }
 
     private void handleMark(String[] args) {
-        int idx = Integer.parseInt(args[1]) - 1;
+        int idx = Integer.parseInt(args[0]) - 1;
         Task t = tasks.get(idx);
         t.mark();
         onRespond.accept("Bravo! You did it :D", new String[]{t.toString()});
     }
 
     private void handleUnmark(String[] args) {
-        int idx = Integer.parseInt(args[1]) - 1;
+        int idx = Integer.parseInt(args[0]) - 1;
         Task t = tasks.get(idx);
         t.unmark();
         onRespond.accept("Alright, I've marked this task as not done yet.", new String[]{t.toString()});
