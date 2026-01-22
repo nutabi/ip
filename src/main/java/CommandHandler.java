@@ -61,26 +61,13 @@ public class CommandHandler {
     }
 
     private String handleDeadline(String[] args) {
-        int i;
-        StringBuilder descBd = new StringBuilder();
-        for (i = 0; i < args.length; i++) {
-            if (args[i].equals("/by")) {
-                break;
-            }
-            descBd.append(args[i]).append(" ");
-        }
-        if (descBd.toString().isBlank()) {
-            return DEADLINE_ERROR;
-        }
-        StringBuilder byBd = new StringBuilder();
-        for (i = i + 1; i < args.length; i++) {
-            byBd.append(args[i]).append(" ");
-        }
-        if (byBd.toString().isBlank()) {
+        String[] parts = splitByDelimiter(args, "/by");
+
+        if (parts.length != 2 || parts[0].isBlank() || parts[1].isBlank()) {
             return DEADLINE_ERROR;
         }
 
-        Task newTask = new Deadline(descBd.toString().trim(), byBd.toString().trim());
+        Task newTask = new Deadline(parts[0], parts[1]);
         tasks.add(newTask);
         onRespond.accept(
                 "Got it. I've added this deadline:",
@@ -89,39 +76,14 @@ public class CommandHandler {
     }
 
     private String handleEvent(String[] args) {
-        int i;
-        StringBuilder descBd = new StringBuilder();
-        for (i = 0; i < args.length; i++) {
-            if (args[i].equals("/from")) {
-                break;
-            }
-            descBd.append(args[i]).append(" ");
-        }
-        if (descBd.toString().isBlank()) {
-            return EVENT_ERROR;
-        }
-        StringBuilder fromBd = new StringBuilder();
-        for (i = i + 1; i < args.length; i++) {
-            if (args[i].equals("/to")) {
-                break;
-            }
-            fromBd.append(args[i]).append(" ");
-        }
-        if (fromBd.toString().isBlank()) {
-            return EVENT_ERROR;
-        }
-        StringBuilder toBd = new StringBuilder();
-        for (i = i + 1; i < args.length; i++) {
-            toBd.append(args[i]).append(" ");
-        }
-        if (toBd.toString().isBlank()) {
+        String[] parts = splitByDelimiter(args, "/from", "/to");
+
+        // Expect exactly 3 parts: description, start time, end time
+        if (parts.length != 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
             return EVENT_ERROR;
         }
 
-        Task newTask = new Event(
-                descBd.toString().trim(),
-                fromBd.toString().trim(),
-                toBd.toString().trim());
+        Task newTask = new Event(parts[0], parts[1], parts[2]);
         tasks.add(newTask);
         onRespond.accept(
                 "Got it. I've added this event:",
@@ -193,5 +155,26 @@ public class CommandHandler {
 
     private String getTaskCountMsg() {
         return String.format("You have %d tasks in total now.", tasks.size());
+    }
+
+    private String[] splitByDelimiter(String[] args, String... delimiters) {
+        List<String> result = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        int delimiterIndex = 0;
+
+        for (String arg : args) {
+            // Check if this arg is the next expected delimiter
+            if (delimiterIndex < delimiters.length && arg.equals(delimiters[delimiterIndex])) {
+                result.add(current.toString().trim());
+                current = new StringBuilder();
+                delimiterIndex++;
+            } else {
+                current.append(arg).append(" ");
+            }
+        }
+        // Add the final segment
+        result.add(current.toString().trim());
+
+        return result.toArray(new String[0]);
     }
 }
