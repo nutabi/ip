@@ -145,7 +145,7 @@ public class CommandHandler {
         int idx;
         try {
             idx = Integer.parseInt(args[0]) - 1;
-        } catch (NumberFormatException e) {
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
             return TASK_NUM_ERROR;
         }
         if (idx < 0 || idx >= tasks.size()) {
@@ -162,7 +162,7 @@ public class CommandHandler {
         int idx;
         try {
             idx = Integer.parseInt(args[0]) - 1;
-        } catch (NumberFormatException e) {
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
             return TASK_NUM_ERROR;
         }
         if (idx < 0 || idx >= tasks.size()) {
@@ -170,7 +170,7 @@ public class CommandHandler {
         }
         Task t = tasks.get(idx);
         t.unmark();
-        onRespond.accept("Alright, I've marked this task as not done yet.", new String[] { t.toString() });
+        onRespond.accept("Bomb you, why never do properly?", new String[] { t.toString() });
         return null;
     }
 
