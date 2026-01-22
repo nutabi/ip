@@ -29,10 +29,7 @@ public class Ibatun {
                     handleUnmark(tasks.get(Integer.parseInt(input[1]) - 1));
                     break;
                 default:
-                    // Treat any other input as a task to be added
-                    Task t = new Task(String.join(" ", input));
-                    tasks.add(t);
-                    respond("Gotchu. I've added this task:", t.toString());
+                    respond("I don't get what you mean :(");
                     break;
             }
         }
