@@ -30,9 +30,8 @@ public class Ibatun {
 
     private static void greet() {
         respond(
-            String.format("Wassup! I'm %s.", BOT_NAME),
-            "How do I help ya?"
-        );
+                String.format("Wassup! I'm %s.", BOT_NAME),
+                "How do I help ya?");
     }
 
     private static void farewell() {
