@@ -11,7 +11,14 @@ public class Ibatun {
 
         greet();
         String[] input = prompt();
-        while (handler.handle(input)) {
+        while (true) {
+            try {
+                if (!handler.handle(input)) {
+                    break;
+                }
+            } catch (IbatunException e) {
+                respond(e.getMessage());
+            }
             input = prompt();
         }
         farewell();
