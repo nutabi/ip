@@ -14,16 +14,14 @@ public class CommandHandler {
     private static final String EVENT_ERROR = "Event must have /from and /to clauses. Correct usage: event <description> /from <start time> /to <end time>";
     private static final String TASK_NUM_ERROR = "Please provide a valid task number.";
 
-
     public CommandHandler(BiConsumer<String, String[]> onRespond) {
         this.commands = Map.of(
-            "todo", this::handleTodo,
-            "deadline", this::handleDeadline,
-            "event", this::handleEvent,
-            "list", this::handleList,
-            "mark", this::handleMark,
-            "unmark", this::handleUnmark
-        );
+                "todo", this::handleTodo,
+                "deadline", this::handleDeadline,
+                "event", this::handleEvent,
+                "list", this::handleList,
+                "mark", this::handleMark,
+                "unmark", this::handleUnmark);
         this.onRespond = onRespond;
         this.tasks = new ArrayList<>();
     }
@@ -57,7 +55,7 @@ public class CommandHandler {
 
         Task newTask = new Todo(description);
         tasks.add(newTask);
-        onRespond.accept("Got it. I've added this todo:", new String[]{newTask.toString()});
+        onRespond.accept("Got it. I've added this todo:", new String[] { newTask.toString(), getTaskCountMsg() });
         return null;
     }
 
@@ -83,7 +81,9 @@ public class CommandHandler {
 
         Task newTask = new Deadline(descBd.toString().trim(), byBd.toString().trim());
         tasks.add(newTask);
-        onRespond.accept("Got it. I've added this deadline:", new String[]{newTask.toString()});
+        onRespond.accept(
+                "Got it. I've added this deadline:",
+                new String[] { newTask.toString(), getTaskCountMsg() });
         return null;
     }
 
@@ -118,12 +118,13 @@ public class CommandHandler {
         }
 
         Task newTask = new Event(
-            descBd.toString().trim(),
-            fromBd.toString().trim(),
-            toBd.toString().trim()
-        );
+                descBd.toString().trim(),
+                fromBd.toString().trim(),
+                toBd.toString().trim());
         tasks.add(newTask);
-        onRespond.accept("Got it. I've added this event:", new String[]{newTask.toString()});
+        onRespond.accept(
+                "Got it. I've added this event:",
+                new String[] { newTask.toString(), getTaskCountMsg() });
         return null;
     }
 
@@ -153,7 +154,7 @@ public class CommandHandler {
 
         Task t = tasks.get(idx);
         t.mark();
-        onRespond.accept("Bravo! You did it :D", new String[]{t.toString()});
+        onRespond.accept("Bravo! You did it :D", new String[] { t.toString() });
         return null;
     }
 
@@ -169,7 +170,11 @@ public class CommandHandler {
         }
         Task t = tasks.get(idx);
         t.unmark();
-        onRespond.accept("Alright, I've marked this task as not done yet.", new String[]{t.toString()});
+        onRespond.accept("Alright, I've marked this task as not done yet.", new String[] { t.toString() });
         return null;
+    }
+
+    private String getTaskCountMsg() {
+        return String.format("You have %d tasks in total now.", tasks.size());
     }
 }
