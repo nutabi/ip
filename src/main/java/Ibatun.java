@@ -10,16 +10,15 @@ public class Ibatun {
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
-        boolean exiting = false;
         ArrayList<Task> tasks = new ArrayList<>();
 
         greet();
-        while (!exiting) {
+        while (true) {
             String[] input = prompt();
             switch (input[0].toLowerCase()) {
                 case "bye":
-                    exiting = true;
-                    break;
+                    farewell();
+                    return;
                 case "list":
                     handleList(tasks);
                     break;
@@ -37,7 +36,6 @@ public class Ibatun {
                     break;
             }
         }
-        farewell();
     }
 
     static void handleList(ArrayList<Task> tasks) {
