@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Ibatun {
     public static final String BOT_NAME = "Ibatun";
@@ -10,68 +7,32 @@ public class Ibatun {
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
-        ArrayList<Task> tasks = new ArrayList<>();
+        CommandHandler handler = new CommandHandler(Ibatun::respond);
 
         greet();
-        while (true) {
-            String[] input = prompt();
-            switch (input[0].toLowerCase()) {
-                case "bye":
-                    farewell();
-                    return;
-                case "list":
-                    handleList(tasks);
-                    break;
-                case "mark":
-                    handleMark(tasks.get(Integer.parseInt(input[1]) - 1));
-                    break;
-                case "unmark":
-                    handleUnmark(tasks.get(Integer.parseInt(input[1]) - 1));
-                    break;
-                default:
-                    respond("I don't get what you mean :(");
-                    break;
-            }
+        String[] input = prompt();
+        while (handler.handle(input)) {
+            input = prompt();
         }
+        farewell();
     }
 
-    static void handleList(ArrayList<Task> tasks) {
-        if (tasks.isEmpty()) {
-            respond("You ain't got no task.");
-        } else {
-            List<String> indexedTasks = IntStream.range(0, tasks.size())
-                .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
-                .toList();
-            respond("Here are your tasks:", indexedTasks.toArray(new String[0]));
-        }
-    }
-
-    static void handleMark(Task t) {
-        t.mark();
-        respond("Bravo! You did it :D", t.toString());
-    }
-
-    static void handleUnmark(Task t) {
-        t.unmark();
-        respond("Alright, I've marked this task as not done yet.", t.toString());
-    }
-
-    static String[] prompt() {
+    private static String[] prompt() {
         return STDIN.nextLine().split(" ");
     }
 
-    static void greet() {
+    private static void greet() {
         respond(
             String.format("Wassup! I'm %s.", BOT_NAME),
             "How do I help ya?"
         );
     }
 
-    static void farewell() {
+    private static void farewell() {
         respond("Baii. See you soon!");
     }
 
-    static void respond(String title, String... response) {
+    private static void respond(String title, String... response) {
         StringBuilder sb = new StringBuilder();
         sb.append(LINE).append("\n");
         sb.append(INDENT).append(title).append("\n");
