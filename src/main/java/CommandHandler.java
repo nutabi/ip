@@ -11,6 +11,9 @@ public class CommandHandler {
 
     public CommandHandler(BiConsumer<String, String[]> onRespond) {
         this.commands = Map.of(
+            "todo", this::handleTodo,
+            "deadline", this::handleDeadline,
+            "event", this::handleEvent,
             "list", this::handleList,
             "mark", this::handleMark,
             "unmark", this::handleUnmark
@@ -35,6 +38,62 @@ public class CommandHandler {
             onRespond.accept("I don't get what you mean :(", new String[0]);
         }
         return true;
+    }
+
+    private void handleTodo(String[] args) {
+        String description = String.join(" ", args);
+        Task newTask = new Todo(description);
+        tasks.add(newTask);
+        onRespond.accept("Got it. I've added this todo:", new String[]{newTask.toString()});
+    }
+
+    private void handleDeadline(String[] args) {
+        int i;
+        StringBuilder descBd = new StringBuilder();
+        for (i = 0; i < args.length; i++) {
+            if (args[i].equals("/by")) {
+                break;
+            }
+            descBd.append(args[i]).append(" ");
+        }
+        StringBuilder byBd = new StringBuilder();
+        for (i = i + 1; i < args.length; i++) {
+            byBd.append(args[i]).append(" ");
+        }
+
+        Task newTask = new Deadline(descBd.toString().trim(), byBd.toString().trim());
+        tasks.add(newTask);
+        onRespond.accept("Got it. I've added this deadline:", new String[]{newTask.toString()});
+    }
+
+    private void handleEvent(String[] args) {
+        int i;
+        StringBuilder descBd = new StringBuilder();
+        for (i = 0; i < args.length; i++) {
+            if (args[i].equals("/from")) {
+                break;
+            }
+            descBd.append(args[i]).append(" ");
+        }
+        StringBuilder fromBd = new StringBuilder();
+        for (i = i + 1; i < args.length; i++) {
+            if (args[i].equals("/to")) {
+                break;
+            }
+            fromBd.append(args[i]).append(" ");
+        }
+        StringBuilder toBd = new StringBuilder();
+        for (i = i + 1; i < args.length; i++) {
+            toBd.append(args[i]).append(" ");
+        }
+
+        Task newTask = new Event(
+            descBd.toString().trim(),
+            fromBd.toString().trim(),
+            toBd.toString().trim()
+        );
+        tasks.add(newTask);
+        onRespond.accept("Got it. I've added this event:", new String[]{newTask.toString()});
     }
 
     private void handleList(String[] args) {
