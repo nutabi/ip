@@ -5,7 +5,7 @@ public class Todo extends Task {
 
     @Override
     public String ser() {
-        String normName = name.replace("|", "\\|");
+        String normName = name.replace("\\", "\\\\").replace("|", "\\|");
         return String.format("T|%s|%s", normName, (done ? "1" : "0"));
     }
 
@@ -17,7 +17,7 @@ public class Todo extends Task {
         if (parts.length != 3) {
             throw new TaskDeserException();
         }
-        String name = parts[1].replace("\\|", "|");
+        String name = parts[1].replace("\\|", "|").replace("\\\\", "\\");
         Todo todo = new Todo(name);
         switch (parts[2]) {
             case "0":

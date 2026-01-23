@@ -10,8 +10,10 @@ public class Event extends Task {
 
     @Override
     public String ser() {
-        String normName = name.replace("|", "\\|");
-        return String.format("E|%s|%s|%s|%s", normName, (done ? "1" : "0"), from, to);
+        String normName = name.replace("\\", "\\\\").replace("|", "\\|");
+        String normFrom = from.replace("\\", "\\\\").replace("|", "\\|");
+        String normTo = to.replace("\\", "\\\\").replace("|", "\\|");
+        return String.format("E|%s|%s|%s|%s", normName, (done ? "1" : "0"), normFrom, normTo);
     }
 
     public static Event deser(String input) throws IbatunException {
@@ -22,9 +24,9 @@ public class Event extends Task {
         if (parts.length != 5) {
             throw new TaskDeserException();
         }
-        String name = parts[1].replace("\\|", "|");
-        String from = parts[3];
-        String to = parts[4];
+        String name = parts[1].replace("\\|", "|").replace("\\\\", "\\");
+        String from = parts[3].replace("\\|", "|").replace("\\\\", "\\");
+        String to = parts[4].replace("\\|", "|").replace("\\\\", "\\");
         Event event = new Event(name, from, to);
         switch (parts[2]) {
             case "0":
