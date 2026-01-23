@@ -1,4 +1,10 @@
+package ibatun.ui;
+
 import java.util.Scanner;
+
+import ibatun.core.CommandHandler;
+import ibatun.core.TaskStore;
+import ibatun.errors.IbatunException;
 
 public class Ibatun {
     public static final String BOT_NAME = "Ibatun";

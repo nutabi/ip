@@ -1,3 +1,5 @@
+package ibatun.core;
+
 public abstract class Task {
     protected String name;
     protected boolean done;

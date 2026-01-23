@@ -1,3 +1,9 @@
+package ibatun.core.tasks;
+
+import ibatun.core.Task;
+import ibatun.errors.IbatunException;
+import ibatun.errors.TaskDeserException;
+
 public class Todo extends Task {
     public Todo(String name) {
         super(name);
