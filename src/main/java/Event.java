@@ -1,8 +1,10 @@
-public class Event extends Task {
-    protected String from;
-    protected String to;
+import java.time.LocalDateTime;
 
-    public Event(String name, String from, String to) {
+public class Event extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
         this.from = from;
         this.to = to;
@@ -21,7 +23,9 @@ public class Event extends Task {
         if (parts.length != 5) {
             throw new TaskDeserException();
         }
-        Event event = new Event(parts[1], parts[3], parts[4]);
+        LocalDateTime from = LocalDateTime.parse(parts[3]);
+        LocalDateTime to = LocalDateTime.parse(parts[4]);
+        Event event = new Event(parts[1], from, to);
         switch (parts[2]) {
             case "0":
                 break;
@@ -36,6 +40,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), from, to);
+        return String.format("[E]%s (from: %s to: %s)", super.toString(), DatetimeConverter.format(from),
+                DatetimeConverter.format(to));
     }
 }

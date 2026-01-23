@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,14 @@ public class CommandHandler {
             return DEADLINE_ERROR;
         }
 
-        Task newTask = new Deadline(parts[0], parts[1]);
+        LocalDateTime by;
+        try {
+            by = DatetimeConverter.parse(parts[1]);
+        } catch (IbatunException e) {
+            return e.getMessage();
+        }
+
+        Task newTask = new Deadline(parts[0], by);
         store.addTask(newTask);
         onRespond.accept(
                 "Got it. I've added this deadline:",
@@ -83,7 +91,15 @@ public class CommandHandler {
             return EVENT_ERROR;
         }
 
-        Task newTask = new Event(parts[0], parts[1], parts[2]);
+        LocalDateTime from;
+        LocalDateTime to;
+        try {
+            from = DatetimeConverter.parse(parts[1]);
+            to = DatetimeConverter.parse(parts[2]);
+        } catch (IbatunException e) {
+            return e.getMessage();
+        }
+        Task newTask = new Event(parts[0], from, to);
         store.addTask(newTask);
         onRespond.accept(
                 "Got it. I've added this event:",
