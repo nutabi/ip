@@ -7,14 +7,14 @@ import java.util.function.Function;
 public class CommandHandler {
     private final Map<String, Function<String[], String>> commands;
     private final BiConsumer<String, String[]> onRespond;
-    private final List<Task> tasks;
+    private final TaskStore store;
 
     private static final String TODO_ERROR = "The description of a todo cannot be empty. Correct usage: todo <description>";
     private static final String DEADLINE_ERROR = "Deadline must have a /by clause. Correct usage: deadline <description> /by <due date>";
     private static final String EVENT_ERROR = "Event must have /from and /to clauses. Correct usage: event <description> /from <start time> /to <end time>";
     private static final String TASK_NUM_ERROR = "Please provide a valid task number.";
 
-    public CommandHandler(BiConsumer<String, String[]> onRespond) {
+    public CommandHandler(BiConsumer<String, String[]> onRespond, TaskStore store) {
         this.commands = Map.of(
                 "todo", this::handleTodo,
                 "deadline", this::handleDeadline,
@@ -24,7 +24,7 @@ public class CommandHandler {
                 "unmark", this::handleUnmark,
                 "delete", this::handleDelete);
         this.onRespond = onRespond;
-        this.tasks = new ArrayList<>();
+        this.store = store;
     }
 
     public boolean handle(String[] input) throws IbatunException {
@@ -55,7 +55,7 @@ public class CommandHandler {
         }
 
         Task newTask = new Todo(description);
-        tasks.add(newTask);
+        store.addTask(newTask);
         onRespond.accept("Got it. I've added this todo:", new String[] { newTask.toString(), getTaskCountMsg() });
         return null;
     }
@@ -68,7 +68,7 @@ public class CommandHandler {
         }
 
         Task newTask = new Deadline(parts[0], parts[1]);
-        tasks.add(newTask);
+        store.addTask(newTask);
         onRespond.accept(
                 "Got it. I've added this deadline:",
                 new String[] { newTask.toString(), getTaskCountMsg() });
@@ -84,7 +84,7 @@ public class CommandHandler {
         }
 
         Task newTask = new Event(parts[0], parts[1], parts[2]);
-        tasks.add(newTask);
+        store.addTask(newTask);
         onRespond.accept(
                 "Got it. I've added this event:",
                 new String[] { newTask.toString(), getTaskCountMsg() });
@@ -92,6 +92,7 @@ public class CommandHandler {
     }
 
     private String handleList(String[] args) {
+        List<Task> tasks = store.listTasks();
         if (tasks.isEmpty()) {
             onRespond.accept("You ain't got no task.", new String[0]);
         } else {
@@ -111,12 +112,12 @@ public class CommandHandler {
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
             return TASK_NUM_ERROR;
         }
-        if (idx < 0 || idx >= tasks.size()) {
+        if (idx < 0 || idx >= store.listTasks().size()) {
             return TASK_NUM_ERROR;
         }
 
-        Task t = tasks.get(idx);
-        t.mark();
+        Task t = store.getTask(idx);
+        store.modifyTask(idx, Task::mark);
         onRespond.accept("Bravo! You did it :D", new String[] { t.toString() });
         return null;
     }
@@ -128,11 +129,12 @@ public class CommandHandler {
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
             return TASK_NUM_ERROR;
         }
-        if (idx < 0 || idx >= tasks.size()) {
+        if (idx < 0 || idx >= store.listTasks().size()) {
             return TASK_NUM_ERROR;
         }
-        Task t = tasks.get(idx);
-        t.unmark();
+
+        Task t = store.getTask(idx);
+        store.modifyTask(idx, Task::unmark);
         onRespond.accept("Bomb you, why never do properly?", new String[] { t.toString() });
         return null;
     }
@@ -144,17 +146,18 @@ public class CommandHandler {
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
             return TASK_NUM_ERROR;
         }
-        if (idx < 0 || idx >= tasks.size()) {
+        if (idx < 0 || idx >= store.listTasks().size()) {
             return TASK_NUM_ERROR;
         }
 
-        Task t = tasks.remove(idx);
+        Task t = store.getTask(idx);
+        store.removeTask(idx);
         onRespond.accept("Aight, I nuked it!", new String[] { t.toString(), getTaskCountMsg() });
         return null;
     }
 
     private String getTaskCountMsg() {
-        return String.format("You have %d tasks in total now.", tasks.size());
+        return String.format("You have %d tasks in total now.", store.listTasks().size());
     }
 
     private String[] splitByDelimiter(String[] args, String... delimiters) {
