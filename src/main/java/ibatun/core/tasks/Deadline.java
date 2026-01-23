@@ -1,4 +1,11 @@
+package ibatun.core.tasks;
+
 import java.time.LocalDateTime;
+
+import ibatun.core.Task;
+import ibatun.errors.IbatunException;
+import ibatun.errors.TaskDeserException;
+import ibatun.util.DatetimeConverter;
 
 public class Deadline extends Task {
     protected LocalDateTime by;

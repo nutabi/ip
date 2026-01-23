@@ -1,14 +1,20 @@
+package ibatun.ui;
+
 import java.util.Scanner;
 
-public class Ibatun {
+import ibatun.core.CommandHandler;
+import ibatun.core.TaskStore;
+import ibatun.errors.IbatunException;
+
+public class IbatunCLI {
     public static final String BOT_NAME = "Ibatun";
     public static final String INDENT = "    ";
     public static final String LINE = INDENT + "――――――――――――――――――――――――――――――――――――――――――";
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
-        TaskStore store = new TaskStore("data.txt", Ibatun::respond);
-        CommandHandler handler = new CommandHandler(Ibatun::respond, store);
+        TaskStore store = new TaskStore("data.txt", IbatunCLI::respond);
+        CommandHandler handler = new CommandHandler(IbatunCLI::respond, store);
 
         greet();
         String[] input = prompt();
