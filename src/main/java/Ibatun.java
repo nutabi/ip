@@ -7,7 +7,7 @@ public class Ibatun {
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
-        TaskStore store = new TaskStore("data.txt");
+        TaskStore store = new TaskStore("data.txt", Ibatun::respond);
         CommandHandler handler = new CommandHandler(Ibatun::respond, store);
 
         greet();
