@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
@@ -28,7 +29,7 @@ test {
 }
 
 application {
-    mainClass.set("ibatun.ui.IbatunCLI")
+    mainClass.set("ibatun.ui.IbatunCli")
 }
 
 shadowJar {
@@ -36,6 +37,10 @@ shadowJar {
     archiveClassifier = null
 }
 
-run{
+run {
     standardInput = System.in
+}
+
+checkstyle {
+    toolVersion = '11.0.0'
 }
