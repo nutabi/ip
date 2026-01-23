@@ -8,9 +8,7 @@ public class Deadline extends Task {
 
     @Override
     public String ser() {
-        String normName = name.replace("\\", "\\\\").replace("|", "\\|");
-        String normBy = by.replace("\\", "\\\\").replace("|", "\\|");
-        return String.format("D|%s|%s|%s", normName, (done ? "1" : "0"), normBy);
+        return String.format("D|%s|%s|%s", name, (done ? "1" : "0"), by);
     }
 
     public static Deadline deser(String input) throws IbatunException {
@@ -21,9 +19,7 @@ public class Deadline extends Task {
         if (parts.length != 4) {
             throw new TaskDeserException();
         }
-        String name = parts[1].replace("\\|", "|").replace("\\\\", "\\");
-        String by = parts[3].replace("\\|", "|").replace("\\\\", "\\");
-        Deadline deadline = new Deadline(name, by);
+        Deadline deadline = new Deadline(parts[1], parts[3]);
         switch (parts[2]) {
             case "0":
                 break;

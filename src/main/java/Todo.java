@@ -5,8 +5,7 @@ public class Todo extends Task {
 
     @Override
     public String ser() {
-        String normName = name.replace("\\", "\\\\").replace("|", "\\|");
-        return String.format("T|%s|%s", normName, (done ? "1" : "0"));
+        return String.format("T|%s|%s", name, (done ? "1" : "0"));
     }
 
     public static Todo deser(String input) throws IbatunException {
@@ -17,8 +16,7 @@ public class Todo extends Task {
         if (parts.length != 3) {
             throw new TaskDeserException();
         }
-        String name = parts[1].replace("\\|", "|").replace("\\\\", "\\");
-        Todo todo = new Todo(name);
+        Todo todo = new Todo(parts[1]);
         switch (parts[2]) {
             case "0":
                 break;
