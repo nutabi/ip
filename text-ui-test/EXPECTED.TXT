@@ -12,7 +12,7 @@
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Got it. I've added this event:
-    [E][ ] read book (from: 2pm to: 5pm)
+    [E][ ] read book (from: 15:00 to: 18:00)
     You have 2 tasks in total now.
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
@@ -23,7 +23,7 @@
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Got it. I've added this deadline:
-    [D][ ] return book (by: sunday)
+    [D][ ] return book (by: Oct 15)
     You have 3 tasks in total now.
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
@@ -32,8 +32,8 @@
     ――――――――――――――――――――――――――――――――――――――――――
     Here are your tasks:
     1. [T][ ] borrow book
-    2. [E][ ] read book (from: 2pm to: 5pm)
-    3. [D][ ] return book (by: sunday)
+    2. [E][ ] read book (from: 15:00 to: 18:00)
+    3. [D][ ] return book (by: Oct 15)
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Oopsie! Please provide a valid task number.
@@ -44,7 +44,7 @@
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Bravo! You did it :D
-    [E][X] read book (from: 2pm to: 5pm)
+    [E][X] read book (from: 15:00 to: 18:00)
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Oopsie! Please provide a valid task number.
@@ -58,13 +58,13 @@
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Aight, I nuked it!
-    [D][ ] return book (by: sunday)
+    [D][ ] return book (by: Oct 15)
     You have 2 tasks in total now.
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Here are your tasks:
     1. [T][ ] borrow book
-    2. [E][X] read book (from: 2pm to: 5pm)
+    2. [E][X] read book (from: 15:00 to: 18:00)
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Baii. See you soon!
