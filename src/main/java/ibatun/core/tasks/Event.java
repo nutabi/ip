@@ -34,13 +34,13 @@ public class Event extends Task {
         LocalDateTime to = LocalDateTime.parse(parts[4]);
         Event event = new Event(parts[1], from, to);
         switch (parts[2]) {
-            case "0":
-                break;
-            case "1":
-                event.mark();
-                break;
-            default:
-                throw new TaskDeserException();
+        case "0":
+            break;
+        case "1":
+            event.mark();
+            break;
+        default:
+            throw new TaskDeserException();
         }
         return event;
     }

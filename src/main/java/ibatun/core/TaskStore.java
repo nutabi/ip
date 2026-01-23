@@ -29,8 +29,8 @@ public class TaskStore {
             load();
         } catch (IbatunException e) {
             onRespond.accept("Failed to load some tasks from storage", new String[] {
-                    "You might want to exit and correct the file yourself.",
-                    "Any actions you take might overwrite the file."
+                "You might want to exit and correct the file yourself.",
+                "Any actions you take might overwrite the file."
             });
         }
     }
@@ -93,7 +93,7 @@ public class TaskStore {
             Files.write(Paths.get(target), serTasks);
         } catch (java.io.IOException e) {
             onRespond.accept("Failed to save tasks to storage", new String[] {
-                    "Your recent changes might not be saved."
+                "Your recent changes might not be saved."
             });
         }
     }
@@ -104,10 +104,10 @@ public class TaskStore {
         }
         try {
             return switch (input.charAt(0)) {
-                case 'T' -> Todo.deser(input);
-                case 'D' -> Deadline.deser(input);
-                case 'E' -> Event.deser(input);
-                default -> null;
+            case 'T' -> Todo.deser(input);
+            case 'D' -> Deadline.deser(input);
+            case 'E' -> Event.deser(input);
+            default -> null;
             };
         } catch (IbatunException | DateTimeParseException e) {
             return null;

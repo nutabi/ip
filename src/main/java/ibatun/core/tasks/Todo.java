@@ -24,13 +24,13 @@ public class Todo extends Task {
         }
         Todo todo = new Todo(parts[1]);
         switch (parts[2]) {
-            case "0":
-                break;
-            case "1":
-                todo.mark();
-                break;
-            default:
-                throw new TaskDeserException();
+        case "0":
+            break;
+        case "1":
+            todo.mark();
+            break;
+        default:
+            throw new TaskDeserException();
         }
         return todo;
     }

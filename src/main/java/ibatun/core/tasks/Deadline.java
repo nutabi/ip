@@ -31,13 +31,13 @@ public class Deadline extends Task {
         LocalDateTime by = LocalDateTime.parse(parts[3]);
         Deadline deadline = new Deadline(parts[1], by);
         switch (parts[2]) {
-            case "0":
-                break;
-            case "1":
-                deadline.mark();
-                break;
-            default:
-                throw new TaskDeserException();
+        case "0":
+            break;
+        case "1":
+            deadline.mark();
+            break;
+        default:
+            throw new TaskDeserException();
         }
         return deadline;
     }

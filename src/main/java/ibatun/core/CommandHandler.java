@@ -14,14 +14,14 @@ import ibatun.errors.IbatunException;
 import ibatun.util.DatetimeConverter;
 
 public class CommandHandler {
+    private static final String TODO_ERROR = "The description of a todo cannot be empty.";
+    private static final String DEADLINE_ERROR = "Deadline must have a /by clause.";
+    private static final String EVENT_ERROR = "Event must have /from and /to clauses.";
+    private static final String TASK_NUM_ERROR = "Please provide a valid task number.";
+
     private final Map<String, Function<String[], String>> commands;
     private final BiConsumer<String, String[]> onRespond;
     private final TaskStore store;
-
-    private static final String TODO_ERROR = "The description of a todo cannot be empty. Correct usage: todo <description>";
-    private static final String DEADLINE_ERROR = "Deadline must have a /by clause. Correct usage: deadline <description> /by <due date>";
-    private static final String EVENT_ERROR = "Event must have /from and /to clauses. Correct usage: event <description> /from <start time> /to <end time>";
-    private static final String TASK_NUM_ERROR = "Please provide a valid task number.";
 
     public CommandHandler(BiConsumer<String, String[]> onRespond, TaskStore store) {
         this.commands = Map.of(

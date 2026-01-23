@@ -63,6 +63,10 @@ public class DatetimeConverter {
     private static final DateTimeFormatter DIFFERENT_YEAR_T = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm");
     private static final DateTimeFormatter SAME_DATE_T = DateTimeFormatter.ofPattern("HH:mm");
 
+    private DatetimeConverter() {
+        // Prevent instantiation
+    }
+
     public static LocalDateTime parse(String s) throws IbatunException {
         for (DateTimeFormatter formatter : INPUT_FORMATTERS) {
             try {
@@ -87,9 +91,5 @@ public class DatetimeConverter {
             formatter = includeTime ? DIFFERENT_YEAR_T : DIFFERENT_YEAR;
         }
         return dateTime.format(formatter);
-    }
-
-    private DatetimeConverter() {
-        // Prevent instantiation
     }
 }
