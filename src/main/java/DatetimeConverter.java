@@ -10,24 +10,37 @@ public class DatetimeConverter {
     private static final LocalDateTime NOW = LocalDateTime.now();
 
     private static final List<DateTimeFormatter> INPUT_FORMATTERS = List.of(
-            // Full date time with year
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"),
-
-            // Date without year and time
+            // Date (with year, with time)
             new DateTimeFormatterBuilder()
                     .parseCaseInsensitive()
-                    .appendPattern("MMM d")
-                    .parseDefaulting(ChronoField.YEAR, NOW.getYear())
+                    .appendPattern("yyyy[-]MMM[-]d HH:mm")
+                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                    .toFormatter(Locale.ENGLISH),
+
+            // Date (with year, no time)
+            new DateTimeFormatterBuilder()
+                    .parseCaseInsensitive()
+                    .appendPattern("yyyy[-]MMM[-]d")
                     .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                     .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                     .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                     .toFormatter(Locale.ENGLISH),
 
-            // Date without year with time
+            // Date (no year, with time)
             new DateTimeFormatterBuilder()
                     .parseCaseInsensitive()
-                    .appendPattern("MMM d HH:mm")
+                    .appendPattern("MMM[ ]d HH:mm")
                     .parseDefaulting(ChronoField.YEAR, NOW.getYear())
+                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                    .toFormatter(Locale.ENGLISH),
+
+            // Date (no year, no time)
+            new DateTimeFormatterBuilder()
+                    .parseCaseInsensitive()
+                    .appendPattern("MMM[ ]d")
+                    .parseDefaulting(ChronoField.YEAR, NOW.getYear())
+                    .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                     .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                     .toFormatter(Locale.ENGLISH),
 
@@ -53,7 +66,7 @@ public class DatetimeConverter {
                 // Try next formatter
             }
         }
-        throw new IbatunException("Invalid datetime: " + s);
+        throw new IbatunException("Invalid date/time: " + s);
     }
 
     public static String format(LocalDateTime dateTime) {
