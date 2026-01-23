@@ -53,10 +53,11 @@ public class DatetimeConverter {
                     .parseDefaulting(ChronoField.DAY_OF_MONTH, NOW.getDayOfMonth())
                     .toFormatter(Locale.ENGLISH));
 
-    public static final DateTimeFormatter SAME_YEAR = DateTimeFormatter.ofPattern("MMM d");
-    public static final DateTimeFormatter DIFFERENT_YEAR = DateTimeFormatter.ofPattern("MMM d, yyyy");
-    public static final DateTimeFormatter SAME_YEAR_T = DateTimeFormatter.ofPattern("MMM d 'at' h:mma");
-    public static final DateTimeFormatter DIFFERENT_YEAR_T = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' h:mma");
+    private static final DateTimeFormatter SAME_YEAR = DateTimeFormatter.ofPattern("MMM d");
+    private static final DateTimeFormatter DIFFERENT_YEAR = DateTimeFormatter.ofPattern("MMM d, yyyy");
+    private static final DateTimeFormatter SAME_YEAR_T = DateTimeFormatter.ofPattern("MMM d 'at' HH:mm");
+    private static final DateTimeFormatter DIFFERENT_YEAR_T = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm");
+    private static final DateTimeFormatter SAME_DATE_T = DateTimeFormatter.ofPattern("HH:mm");
 
     public static LocalDateTime parse(String s) throws IbatunException {
         for (DateTimeFormatter formatter : INPUT_FORMATTERS) {
@@ -72,7 +73,11 @@ public class DatetimeConverter {
     public static String format(LocalDateTime dateTime) {
         DateTimeFormatter formatter;
         boolean includeTime = dateTime.getHour() != 0 || dateTime.getMinute() != 0 || dateTime.getSecond() != 0;
-        if (dateTime.getYear() == NOW.getYear()) {
+        if (dateTime.getYear() == NOW.getYear()
+                && dateTime.getMonth() == NOW.getMonth()
+                && dateTime.getDayOfMonth() == NOW.getDayOfMonth()) {
+            formatter = SAME_DATE_T;
+        } else if (dateTime.getYear() == NOW.getYear()) {
             formatter = includeTime ? SAME_YEAR_T : SAME_YEAR;
         } else {
             formatter = includeTime ? DIFFERENT_YEAR_T : DIFFERENT_YEAR;
