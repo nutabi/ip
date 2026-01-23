@@ -1,6 +1,7 @@
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -76,6 +77,7 @@ public class TaskStore {
         }
         if (!invalidTasks.isEmpty()) {
             onRespond.accept("Some tasks failed to load:", invalidTasks.toArray(new String[0]));
+            throw new IbatunException("");
         }
     }
 
@@ -100,7 +102,7 @@ public class TaskStore {
                 case 'E' -> Event.deser(input);
                 default -> null;
             };
-        } catch (IbatunException e) {
+        } catch (IbatunException | DateTimeParseException e) {
             return null;
         }
     }

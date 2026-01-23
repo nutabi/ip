@@ -1,7 +1,9 @@
-public class Deadline extends Task {
-    protected String by;
+import java.time.LocalDateTime;
 
-    public Deadline(String name, String by) {
+public class Deadline extends Task {
+    protected LocalDateTime by;
+
+    public Deadline(String name, LocalDateTime by) {
         super(name);
         this.by = by;
     }
@@ -19,7 +21,8 @@ public class Deadline extends Task {
         if (parts.length != 4) {
             throw new TaskDeserException();
         }
-        Deadline deadline = new Deadline(parts[1], parts[3]);
+        LocalDateTime by = LocalDateTime.parse(parts[3]);
+        Deadline deadline = new Deadline(parts[1], by);
         switch (parts[2]) {
             case "0":
                 break;
@@ -34,6 +37,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return String.format("[D]%s (by: %s)", super.toString(), by);
+        return String.format("[D]%s (by: %s)", super.toString(), DatetimeConverter.format(by));
     }
 }
