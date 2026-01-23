@@ -1,10 +1,14 @@
-public class Task {
+public abstract class Task {
     protected String name;
     protected boolean done;
 
-    public Task(String name) {
+    protected Task(String name) {
         this.name = name;
         this.done = false;
+    }
+
+    public boolean done() {
+        return done;
     }
 
     public void mark() {
@@ -18,6 +22,8 @@ public class Task {
     public String getName() {
         return this.name;
     }
+
+    public abstract String ser();
 
     @Override
     public String toString() {
