@@ -117,6 +117,10 @@ public class CommandHandler {
         }
 
         Task t = store.getTask(idx);
+        if (t.done()) {
+            onRespond.accept("This task is already marked done!", new String[] { t.toString() });
+            return null;
+        }
         store.modifyTask(idx, Task::mark);
         onRespond.accept("Bravo! You did it :D", new String[] { t.toString() });
         return null;
@@ -134,6 +138,10 @@ public class CommandHandler {
         }
 
         Task t = store.getTask(idx);
+        if (!t.done()) {
+            onRespond.accept("This task is already unmarked!", new String[] { t.toString() });
+            return null;
+        }
         store.modifyTask(idx, Task::unmark);
         onRespond.accept("Bomb you, why never do properly?", new String[] { t.toString() });
         return null;
