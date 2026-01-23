@@ -6,15 +6,15 @@ import ibatun.core.CommandHandler;
 import ibatun.core.TaskStore;
 import ibatun.errors.IbatunException;
 
-public class IbatunCLI {
+public class IbatunCli {
     public static final String BOT_NAME = "Ibatun";
     public static final String INDENT = "    ";
     public static final String LINE = INDENT + "――――――――――――――――――――――――――――――――――――――――――";
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
-        TaskStore store = new TaskStore("data.txt", IbatunCLI::respond);
-        CommandHandler handler = new CommandHandler(IbatunCLI::respond, store);
+        TaskStore store = new TaskStore("data.txt", IbatunCli::respond);
+        CommandHandler handler = new CommandHandler(IbatunCli::respond, store);
 
         greet();
         String[] input = prompt();
