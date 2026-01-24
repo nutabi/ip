@@ -18,11 +18,11 @@ public class Event extends Task {
     }
 
     @Override
-    public String ser() {
+    public String serialise() {
         return String.format("E|%s|%s|%s|%s", name, (isDone() ? "1" : "0"), from, to);
     }
 
-    public static Event deser(String input) throws IbatunException {
+    public static Event deserialise(String input) throws IbatunException {
         if (input.isBlank() || input.charAt(0) != 'E') {
             throw new TaskSerialisationException();
         }

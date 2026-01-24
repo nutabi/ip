@@ -25,7 +25,7 @@ public abstract class Task {
         return this.name;
     }
 
-    public abstract String ser();
+    public abstract String serialise();
 
     @Override
     public String toString() {

@@ -45,7 +45,7 @@ public class TaskStore {
 
     public void addTask(Task task) {
         tasks.add(task);
-        serTasks.add(task.ser());
+        serTasks.add(task.serialise());
         save();
     }
 
@@ -58,7 +58,7 @@ public class TaskStore {
     public void modifyTask(int index, Consumer<Task> modifier) {
         Task task = tasks.get(index);
         modifier.accept(task);
-        serTasks.set(index, task.ser());
+        serTasks.set(index, task.serialise());
         save();
     }
 
@@ -104,9 +104,9 @@ public class TaskStore {
         }
         try {
             return switch (input.charAt(0)) {
-            case 'T' -> Todo.deser(input);
-            case 'D' -> Deadline.deser(input);
-            case 'E' -> Event.deser(input);
+            case 'T' -> Todo.deserialise(input);
+            case 'D' -> Deadline.deserialise(input);
+            case 'E' -> Event.deserialise(input);
             default -> null;
             };
         } catch (IbatunException | DateTimeParseException e) {

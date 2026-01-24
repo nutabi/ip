@@ -10,11 +10,11 @@ public class Todo extends Task {
     }
 
     @Override
-    public String ser() {
+    public String serialise() {
         return String.format("T|%s|%s", name, (isDone() ? "1" : "0"));
     }
 
-    public static Todo deser(String input) throws IbatunException {
+    public static Todo deserialise(String input) throws IbatunException {
         if (input.isBlank() || input.charAt(0) != 'T') {
             throw new TaskSerialisationException();
         }

@@ -16,11 +16,11 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String ser() {
+    public String serialise() {
         return String.format("D|%s|%s|%s", name, (isDone() ? "1" : "0"), by);
     }
 
-    public static Deadline deser(String input) throws IbatunException {
+    public static Deadline deserialise(String input) throws IbatunException {
         if (input.isBlank() || input.charAt(0) != 'D') {
             throw new TaskSerialisationException();
         }
