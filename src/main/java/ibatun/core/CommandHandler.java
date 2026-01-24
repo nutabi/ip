@@ -141,7 +141,7 @@ public class CommandHandler {
         }
 
         Task t = store.getTask(idx);
-        if (t.done()) {
+        if (t.isDone()) {
             onRespond.accept("This task is already marked done!", new String[] { t.toString() });
             return null;
         }
@@ -162,7 +162,7 @@ public class CommandHandler {
         }
 
         Task t = store.getTask(idx);
-        if (!t.done()) {
+        if (!t.isDone()) {
             onRespond.accept("This task is already unmarked!", new String[] { t.toString() });
             return null;
         }

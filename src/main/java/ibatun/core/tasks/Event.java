@@ -19,7 +19,7 @@ public class Event extends Task {
 
     @Override
     public String ser() {
-        return String.format("E|%s|%s|%s|%s", name, (done ? "1" : "0"), from, to);
+        return String.format("E|%s|%s|%s|%s", name, (isDone() ? "1" : "0"), from, to);
     }
 
     public static Event deser(String input) throws IbatunException {

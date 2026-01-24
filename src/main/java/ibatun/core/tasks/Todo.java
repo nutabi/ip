@@ -11,7 +11,7 @@ public class Todo extends Task {
 
     @Override
     public String ser() {
-        return String.format("T|%s|%s", name, (done ? "1" : "0"));
+        return String.format("T|%s|%s", name, (isDone() ? "1" : "0"));
     }
 
     public static Todo deser(String input) throws IbatunException {

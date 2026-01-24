@@ -2,23 +2,23 @@ package ibatun.core;
 
 public abstract class Task {
     protected String name;
-    protected boolean done;
+    protected boolean isDone;
 
     protected Task(String name) {
         this.name = name;
-        this.done = false;
+        this.isDone = false;
     }
 
-    public boolean done() {
-        return done;
+    public boolean isDone() {
+        return isDone;
     }
 
     public void mark() {
-        this.done = true;
+        this.isDone = true;
     }
 
     public void unmark() {
-        this.done = false;
+        this.isDone = false;
     }
 
     public String getName() {
@@ -29,6 +29,6 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return String.format("%s %s", (done ? "[X]" : "[ ]"), name);
+        return String.format("%s %s", (isDone ? "[X]" : "[ ]"), name);
     }
 }

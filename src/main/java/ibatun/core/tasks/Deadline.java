@@ -17,7 +17,7 @@ public class Deadline extends Task {
 
     @Override
     public String ser() {
-        return String.format("D|%s|%s|%s", name, (done ? "1" : "0"), by);
+        return String.format("D|%s|%s|%s", name, (isDone() ? "1" : "0"), by);
     }
 
     public static Deadline deser(String input) throws IbatunException {
