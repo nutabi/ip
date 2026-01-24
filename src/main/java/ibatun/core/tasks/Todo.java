@@ -2,7 +2,7 @@ package ibatun.core.tasks;
 
 import ibatun.core.Task;
 import ibatun.errors.IbatunException;
-import ibatun.errors.TaskDeserException;
+import ibatun.errors.TaskSerialisationException;
 
 public class Todo extends Task {
     public Todo(String name) {
@@ -16,11 +16,11 @@ public class Todo extends Task {
 
     public static Todo deser(String input) throws IbatunException {
         if (input.isBlank() || input.charAt(0) != 'T') {
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         String[] parts = input.split("\\|");
         if (parts.length != 3) {
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         Todo todo = new Todo(parts[1]);
         switch (parts[2]) {
@@ -30,7 +30,7 @@ public class Todo extends Task {
             todo.mark();
             break;
         default:
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         return todo;
     }

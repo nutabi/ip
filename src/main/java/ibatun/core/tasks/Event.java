@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import ibatun.core.Task;
 import ibatun.errors.IbatunException;
-import ibatun.errors.TaskDeserException;
+import ibatun.errors.TaskSerialisationException;
 import ibatun.util.DatetimeConverter;
 
 public class Event extends Task {
@@ -24,11 +24,11 @@ public class Event extends Task {
 
     public static Event deser(String input) throws IbatunException {
         if (input.isBlank() || input.charAt(0) != 'E') {
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         String[] parts = input.split("\\|");
         if (parts.length != 5) {
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         LocalDateTime from = LocalDateTime.parse(parts[3]);
         LocalDateTime to = LocalDateTime.parse(parts[4]);
@@ -40,7 +40,7 @@ public class Event extends Task {
             event.mark();
             break;
         default:
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         return event;
     }

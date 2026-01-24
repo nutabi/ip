@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import ibatun.core.Task;
 import ibatun.errors.IbatunException;
-import ibatun.errors.TaskDeserException;
+import ibatun.errors.TaskSerialisationException;
 import ibatun.util.DatetimeConverter;
 
 public class Deadline extends Task {
@@ -22,11 +22,11 @@ public class Deadline extends Task {
 
     public static Deadline deser(String input) throws IbatunException {
         if (input.isBlank() || input.charAt(0) != 'D') {
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         String[] parts = input.split("\\|");
         if (parts.length != 4) {
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         LocalDateTime by = LocalDateTime.parse(parts[3]);
         Deadline deadline = new Deadline(parts[1], by);
@@ -37,7 +37,7 @@ public class Deadline extends Task {
             deadline.mark();
             break;
         default:
-            throw new TaskDeserException();
+            throw new TaskSerialisationException();
         }
         return deadline;
     }
