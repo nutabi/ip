@@ -1,10 +1,9 @@
 package ibatun.core.tasks;
 
-import ibatun.core.Task;
 import ibatun.errors.IbatunException;
 import ibatun.errors.TaskSerialisationException;
 
-public class Todo extends Task {
+public final class Todo extends Task {
     public Todo(String name) {
         super(name);
     }

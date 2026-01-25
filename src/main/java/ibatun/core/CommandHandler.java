@@ -7,9 +7,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import ibatun.core.tasks.Deadline;
-import ibatun.core.tasks.Event;
-import ibatun.core.tasks.Todo;
+import ibatun.core.tasks.*;
 import ibatun.errors.IbatunException;
 import ibatun.util.DatetimeConverter;
 

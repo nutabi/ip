@@ -2,12 +2,11 @@ package ibatun.core.tasks;
 
 import java.time.LocalDateTime;
 
-import ibatun.core.Task;
 import ibatun.errors.IbatunException;
 import ibatun.errors.TaskSerialisationException;
 import ibatun.util.DatetimeConverter;
 
-public class Event extends Task {
+public final class Event extends Task {
     protected LocalDateTime from;
     protected LocalDateTime to;
 

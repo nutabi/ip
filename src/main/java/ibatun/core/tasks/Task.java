@@ -1,6 +1,6 @@
-package ibatun.core;
+package ibatun.core.tasks;
 
-public abstract class Task {
+public abstract sealed class Task permits Todo, Deadline, Event {
     protected String name;
     protected boolean isDone;
 

@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import ibatun.core.tasks.Deadline;
-import ibatun.core.tasks.Event;
-import ibatun.core.tasks.Todo;
+import ibatun.core.tasks.*;
 import ibatun.errors.IbatunException;
 
 public class TaskStore {
