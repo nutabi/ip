@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import ibatun.core.tasks.*;
+import ibatun.core.tasks.Deadline;
+import ibatun.core.tasks.Event;
+import ibatun.core.tasks.Task;
+import ibatun.core.tasks.Todo;
 import ibatun.errors.IbatunException;
 
 public class TaskStore {
@@ -26,10 +29,10 @@ public class TaskStore {
         try {
             load();
         } catch (IbatunException e) {
-            onRespond.accept("Failed to load some tasks from storage", new String[] {
-                "You might want to exit and correct the file yourself.",
-                "Any actions you take might overwrite the file."
-            });
+            onRespond
+                    .accept("Failed to load some tasks from storage",
+                            new String[] { "You might want to exit and correct the file yourself.",
+                                "Any actions you take might overwrite the file." });
         }
     }
 
@@ -90,9 +93,9 @@ public class TaskStore {
         try {
             Files.write(Paths.get(target), serTasks);
         } catch (java.io.IOException e) {
-            onRespond.accept("Failed to save tasks to storage", new String[] {
-                "Your recent changes might not be saved."
-            });
+            onRespond
+                    .accept("Failed to save tasks to storage",
+                            new String[] { "Your recent changes might not be saved." });
         }
     }
 
