@@ -13,49 +13,50 @@ import ibatun.errors.IbatunException;
 public class DatetimeConverter {
     private static final LocalDateTime NOW = LocalDateTime.now();
 
-    private static final List<DateTimeFormatter> INPUT_FORMATTERS = List.of(
-            // Date (with year, with time)
-            new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("yyyy[-]MMM[-]d HH:mm")
-                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
-                    .toFormatter(Locale.ENGLISH),
+    private static final List<DateTimeFormatter> INPUT_FORMATTERS = List
+            .of(
+                    // Date (with year, with time)
+                    new DateTimeFormatterBuilder()
+                            .parseCaseInsensitive()
+                            .appendPattern("yyyy[-]MMM[-]d HH:mm")
+                            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                            .toFormatter(Locale.ENGLISH),
 
-            // Date (with year, no time)
-            new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("yyyy[-]MMM[-]d")
-                    .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
-                    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
-                    .toFormatter(Locale.ENGLISH),
+                    // Date (with year, no time)
+                    new DateTimeFormatterBuilder()
+                            .parseCaseInsensitive()
+                            .appendPattern("yyyy[-]MMM[-]d")
+                            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                            .toFormatter(Locale.ENGLISH),
 
-            // Date (no year, with time)
-            new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("MMM[ ]d HH:mm")
-                    .parseDefaulting(ChronoField.YEAR, NOW.getYear())
-                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
-                    .toFormatter(Locale.ENGLISH),
+                    // Date (no year, with time)
+                    new DateTimeFormatterBuilder()
+                            .parseCaseInsensitive()
+                            .appendPattern("MMM[-]d HH:mm")
+                            .parseDefaulting(ChronoField.YEAR, NOW.getYear())
+                            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                            .toFormatter(Locale.ENGLISH),
 
-            // Date (no year, no time)
-            new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("MMM[ ]d")
-                    .parseDefaulting(ChronoField.YEAR, NOW.getYear())
-                    .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
-                    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
-                    .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
-                    .toFormatter(Locale.ENGLISH),
+                    // Date (no year, no time)
+                    new DateTimeFormatterBuilder()
+                            .parseCaseInsensitive()
+                            .appendPattern("MMM[-]d")
+                            .parseDefaulting(ChronoField.YEAR, NOW.getYear())
+                            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                            .toFormatter(Locale.ENGLISH),
 
-            // Time only
-            new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("HH:mm")
-                    .parseDefaulting(ChronoField.YEAR, NOW.getYear())
-                    .parseDefaulting(ChronoField.MONTH_OF_YEAR, NOW.getMonthValue())
-                    .parseDefaulting(ChronoField.DAY_OF_MONTH, NOW.getDayOfMonth())
-                    .toFormatter(Locale.ENGLISH));
+                    // Time only
+                    new DateTimeFormatterBuilder()
+                            .parseCaseInsensitive()
+                            .appendPattern("HH:mm")
+                            .parseDefaulting(ChronoField.YEAR, NOW.getYear())
+                            .parseDefaulting(ChronoField.MONTH_OF_YEAR, NOW.getMonthValue())
+                            .parseDefaulting(ChronoField.DAY_OF_MONTH, NOW.getDayOfMonth())
+                            .toFormatter(Locale.ENGLISH));
 
     private static final DateTimeFormatter SAME_YEAR = DateTimeFormatter.ofPattern("MMM d");
     private static final DateTimeFormatter DIFFERENT_YEAR = DateTimeFormatter.ofPattern("MMM d, yyyy");
