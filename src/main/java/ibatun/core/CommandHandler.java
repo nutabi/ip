@@ -55,7 +55,7 @@ public class CommandHandler {
 
     /**
      * Constructor for CommandHandler.
-     * 
+     *
      * @param onRespond The callback to respond to the user
      * @param store     The task storage
      */
@@ -70,7 +70,7 @@ public class CommandHandler {
 
     /**
      * Handles a user command.
-     * 
+     *
      * @param input The user input split into command and arguments
      * @return true if the application should continue running, false if it should exit
      * @throws IbatunException if there is an error processing the command
@@ -98,7 +98,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'todo' command.
-     * 
+     *
      * @param args The arguments for the todo command
      * @return Error message if any, null otherwise
      */
@@ -116,7 +116,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'deadline' command.
-     * 
+     *
      * @param args The arguments for the deadline command
      * @return Error message if any, null otherwise
      */
@@ -142,7 +142,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'event' command.
-     * 
+     *
      * @param args The arguments for the event command
      * @return Error message if any, null otherwise
      */
@@ -170,7 +170,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'list' command.
-     * 
+     *
      * @param args The arguments for the list command
      * @return Error message if any, null otherwise
      */
@@ -190,7 +190,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'mark' command.
-     * 
+     *
      * @param args The arguments for the mark command
      * @return Error message if any, null otherwise
      */
@@ -217,7 +217,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'unmark' command.
-     * 
+     *
      * @param args The arguments for the unmark command
      * @return Error message if any, null otherwise
      */
@@ -244,7 +244,7 @@ public class CommandHandler {
 
     /**
      * Handles the 'delete' command.
-     * 
+     *
      * @param args The arguments for the delete command
      * @return Error message if any, null otherwise
      */
@@ -267,7 +267,7 @@ public class CommandHandler {
 
     /**
      * Gets a message indicating the current task count.
-     * 
+     *
      * @return The task count message
      */
     private String getTaskCountMsg() {
@@ -276,7 +276,7 @@ public class CommandHandler {
 
     /**
      * Splits the arguments by the specified delimiters.
-     * 
+     *
      * @param args       The arguments to split
      * @param delimiters The delimiters to split by
      * @return The split segments

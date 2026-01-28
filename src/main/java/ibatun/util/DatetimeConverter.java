@@ -10,6 +10,12 @@ import java.util.Locale;
 
 import ibatun.errors.IbatunException;
 
+/**
+ * Utility class for converting between LocalDateTime objects and their string representations.
+ *
+ * @author Binh
+ * @version 1.0
+ */
 public class DatetimeConverter {
     /**
      * The current date and time.
@@ -97,7 +103,7 @@ public class DatetimeConverter {
 
     /**
      * Parses a date/time string into a LocalDateTime object.
-     * 
+     *
      * @param s The date/time string
      * @return The parsed LocalDateTime object
      * @throws IbatunException if the string cannot be parsed
@@ -115,7 +121,7 @@ public class DatetimeConverter {
 
     /**
      * Formats a LocalDateTime object into a string.
-     * 
+     *
      * @param dateTime The LocalDateTime object
      * @return The formatted date/time string
      */

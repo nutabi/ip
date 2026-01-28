@@ -6,10 +6,10 @@ import ibatun.util.DatetimeConverter;
 
 /**
  * Represents an event task with a start and end time.
- * 
+ *
  * @author Binh
- * @see Task
  * @version 1.0
+ * @see Task
  */
 public final class Event extends Task {
     /**
@@ -24,7 +24,7 @@ public final class Event extends Task {
 
     /**
      * Creates an Event task.
-     * 
+     *
      * @param name The name of the event
      * @param from The start time of the event
      * @param to   The end time of the event
@@ -38,7 +38,7 @@ public final class Event extends Task {
 
     /**
      * Gets the start time of the event.
-     * 
+     *
      * @return The start time of the event
      */
     public LocalDateTime getFrom() {
@@ -47,7 +47,7 @@ public final class Event extends Task {
 
     /**
      * Gets the end time of the event.
-     * 
+     *
      * @return The end time of the event
      */
     public LocalDateTime getTo() {

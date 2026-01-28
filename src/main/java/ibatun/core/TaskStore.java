@@ -41,7 +41,7 @@ public class TaskStore {
 
     /**
      * Constructor for TaskStore.
-     * 
+     *
      * @param path      The file path for storing tasks
      * @param onRespond The callback to respond to the user
      */
@@ -54,7 +54,7 @@ public class TaskStore {
 
     /**
      * Gets the task at the specified index.
-     * 
+     *
      * @param index The index of the task
      * @return The task at the specified index
      * @throws IndexOutOfBoundsException if the index is out of range
@@ -65,7 +65,7 @@ public class TaskStore {
 
     /**
      * Lists all tasks.
-     * 
+     *
      * @return The list of all tasks
      */
     public List<Task> listTasks() {
@@ -74,7 +74,7 @@ public class TaskStore {
 
     /**
      * Adds a new task.
-     * 
+     *
      * @param task The task to add
      */
     public void addTask(Task task) {
@@ -83,7 +83,7 @@ public class TaskStore {
 
     /**
      * Removes the task at the specified index.
-     * 
+     *
      * @param index The index of the task to remove
      * @throws IndexOutOfBoundsException if the index is out of range
      */
@@ -93,7 +93,7 @@ public class TaskStore {
 
     /**
      * Modifies the task at the specified index using the provided modifier.
-     * 
+     *
      * @param index    The index of the task to modify
      * @param modifier The modifier function to apply to the task
      * @throws IndexOutOfBoundsException if the index is out of range

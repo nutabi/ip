@@ -6,6 +6,12 @@ import ibatun.core.CommandHandler;
 import ibatun.core.TaskStore;
 import ibatun.errors.IbatunException;
 
+/**
+ * The command-line interface for the Ibatun application.
+ *
+ * @author Binh
+ * @version 1.0
+ */
 public class IbatunCli {
     /**
      * The name of the bot.
@@ -29,7 +35,7 @@ public class IbatunCli {
 
     /**
      * Main method to run the Ibatun CLI application.
-     * 
+     *
      * @param args Command-line arguments (not used)
      */
     public static void main(String[] args) {
@@ -53,7 +59,7 @@ public class IbatunCli {
 
     /**
      * Prompts the user for input.
-     * 
+     *
      * @return The user input split into command and arguments
      */
     private static String[] prompt() {
@@ -76,7 +82,7 @@ public class IbatunCli {
 
     /**
      * Responds to the user with a formatted message.
-     * 
+     *
      * @param title    The title of the response
      * @param response The response lines
      */

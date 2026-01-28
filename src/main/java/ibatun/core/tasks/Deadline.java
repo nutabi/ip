@@ -6,10 +6,10 @@ import ibatun.util.DatetimeConverter;
 
 /**
  * Represents a deadline task with a specific due date and time.
- * 
+ *
  * @author Binh
- * @see Task
  * @version 1.0
+ * @see Task
  */
 public final class Deadline extends Task {
     /**
@@ -19,7 +19,7 @@ public final class Deadline extends Task {
 
     /**
      * Creates a Deadline task.
-     * 
+     *
      * @param name The name of the deadline task
      * @param by   The due date and time of the deadline
      * @see DatetimeConverter DatetimeConverter for formatting {@code by}
@@ -31,7 +31,7 @@ public final class Deadline extends Task {
 
     /**
      * Gets the due date and time of the deadline.
-     * 
+     *
      * @return The due date and time of the deadline
      */
     public LocalDateTime getBy() {
