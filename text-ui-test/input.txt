@@ -1,10 +1,6 @@
-todo
 todo borrow book
-event read book /from 15:00 /to 18:00
-event read book from 15:00 /to 18:00
-event read book /from 15:00 to 18:00
-deadline return book /by oct 15
-deadline missing by oct 15
+event read book /from Jan26 15:00 /to Jan28 18:00
+deadline return book /by Feb1
 list
 mark
 mark 1
