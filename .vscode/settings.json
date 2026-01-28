@@ -9,5 +9,5 @@
     "editor.formatOnPaste": true,
     "java.format.settings.profile": "Checkstyle Compliant",
     "java.format.settings.url": "config/eclipse-formatter.xml",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
