@@ -13,7 +13,7 @@ public class IbatunCli {
     public static final Scanner STDIN = new Scanner(System.in);
 
     public static void main(String[] args) {
-        TaskStore store = new TaskStore("data.txt", IbatunCli::respond);
+        TaskStore store = new TaskStore("data.local.json", IbatunCli::respond);
         CommandHandler handler = new CommandHandler(IbatunCli::respond, store);
 
         greet();
@@ -36,9 +36,7 @@ public class IbatunCli {
     }
 
     private static void greet() {
-        respond(
-                String.format("Wassup! I'm %s.", BOT_NAME),
-                "How do I help ya?");
+        respond(String.format("Wassup! I'm %s.", BOT_NAME), "How do I help ya?");
     }
 
     private static void farewell() {

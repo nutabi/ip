@@ -3,37 +3,25 @@
     How do I help ya?
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
-    Oopsie! The description of a todo cannot be empty. Correct usage: todo <description>
-    ――――――――――――――――――――――――――――――――――――――――――
-    ――――――――――――――――――――――――――――――――――――――――――
     Got it. I've added this todo:
     [T][ ] borrow book
     You have 1 tasks in total now.
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Got it. I've added this event:
-    [E][ ] read book (from: 15:00 to: 18:00)
+    [E][ ] read book (from: Jan 26 at 15:00 to: 18:00)
     You have 2 tasks in total now.
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
-    Oopsie! Event must have /from and /to clauses. Correct usage: event <description> /from <start time> /to <end time>
-    ――――――――――――――――――――――――――――――――――――――――――
-    ――――――――――――――――――――――――――――――――――――――――――
-    Oopsie! Event must have /from and /to clauses. Correct usage: event <description> /from <start time> /to <end time>
-    ――――――――――――――――――――――――――――――――――――――――――
-    ――――――――――――――――――――――――――――――――――――――――――
     Got it. I've added this deadline:
-    [D][ ] return book (by: Oct 15)
+    [D][ ] return book (by: Feb 1)
     You have 3 tasks in total now.
-    ――――――――――――――――――――――――――――――――――――――――――
-    ――――――――――――――――――――――――――――――――――――――――――
-    Oopsie! Deadline must have a /by clause. Correct usage: deadline <description> /by <due date>
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Here are your tasks:
     1. [T][ ] borrow book
-    2. [E][ ] read book (from: 15:00 to: 18:00)
-    3. [D][ ] return book (by: Oct 15)
+    2. [E][ ] read book (from: Jan 26 at 15:00 to: 18:00)
+    3. [D][ ] return book (by: Feb 1)
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Oopsie! Please provide a valid task number.
@@ -44,7 +32,7 @@
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Bravo! You did it :D
-    [E][X] read book (from: 15:00 to: 18:00)
+    [E][X] read book (from: Jan 26 at 15:00 to: 18:00)
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Oopsie! Please provide a valid task number.
@@ -58,13 +46,13 @@
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Aight, I nuked it!
-    [D][ ] return book (by: Oct 15)
+    [D][ ] return book (by: Feb 1)
     You have 2 tasks in total now.
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Here are your tasks:
     1. [T][ ] borrow book
-    2. [E][X] read book (from: 15:00 to: 18:00)
+    2. [E][X] read book (from: Jan 26 at 15:00 to: 18:00)
     ――――――――――――――――――――――――――――――――――――――――――
     ――――――――――――――――――――――――――――――――――――――――――
     Baii. See you soon!

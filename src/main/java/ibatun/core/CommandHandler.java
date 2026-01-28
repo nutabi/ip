@@ -28,7 +28,7 @@ public class CommandHandler {
         this.commands = Map
                 .of("todo", this::handleTodo, "deadline", this::handleDeadline, "event", this::handleEvent, "list",
                         this::handleList, "mark", this::handleMark, "unmark", this::handleUnmark, "delete",
-                        this::handleDelete);
+                        this::handleDelete, "find", this::handleFind);
         this.onRespond = onRespond;
         this.store = store;
     }
@@ -178,6 +178,28 @@ public class CommandHandler {
         Task t = store.getTask(idx);
         store.removeTask(idx);
         onRespond.accept("Aight, I nuked it!", new String[] { t.toString(), getTaskCountMsg() });
+        return null;
+    }
+
+    private String handleFind(String[] args) {
+        List<Task> matchedTasks = store.listTasks().stream().filter(task -> {
+            for (String keyword : args) {
+                if (task.getName().contains(keyword)) {
+                    return true;
+                }
+            }
+            return false;
+        }).toList();
+
+        if (matchedTasks.isEmpty()) {
+            onRespond.accept("No matching tasks found.", new String[0]);
+        } else {
+            List<String> indexedTasks = new ArrayList<>();
+            for (int i = 0; i < matchedTasks.size(); i++) {
+                indexedTasks.add(String.format("%d. %s", i + 1, matchedTasks.get(i)));
+            }
+            onRespond.accept("Here are the matching tasks in your list:", indexedTasks.toArray(new String[0]));
+        }
         return null;
     }
 
