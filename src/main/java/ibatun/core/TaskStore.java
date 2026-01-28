@@ -1,39 +1,33 @@
 package ibatun.core;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import ibatun.core.tasks.Deadline;
-import ibatun.core.tasks.Event;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ibatun.core.tasks.Task;
-import ibatun.core.tasks.Todo;
-import ibatun.errors.IbatunException;
 
 public class TaskStore {
-    private final String target;
-    private final List<Task> tasks;
-    private final List<String> serTasks;
+    private final String path;
     private final BiConsumer<String, String[]> onRespond;
+    private final ObjectMapper mapper;
+
+    private List<Task> tasks;
 
     public TaskStore(String path, BiConsumer<String, String[]> onRespond) {
-        this.target = path;
-        this.tasks = new ArrayList<>();
-        this.serTasks = new ArrayList<>();
+        this.path = path;
         this.onRespond = onRespond;
-        try {
-            load();
-        } catch (IbatunException e) {
-            onRespond
-                    .accept("Failed to load some tasks from storage",
-                            new String[] { "You might want to exit and correct the file yourself.",
-                                "Any actions you take might overwrite the file." });
-        }
+        this.mapper = new ObjectMapper();
+        load();
+
     }
 
     public Task getTask(int index) throws IndexOutOfBoundsException {
@@ -46,72 +40,45 @@ public class TaskStore {
 
     public void addTask(Task task) {
         tasks.add(task);
-        serTasks.add(task.serialise());
-        save();
     }
 
     public void removeTask(int index) throws IndexOutOfBoundsException {
         tasks.remove(index);
-        serTasks.remove(index);
-        save();
     }
 
     public void modifyTask(int index, Consumer<Task> modifier) {
         Task task = tasks.get(index);
         modifier.accept(task);
-        serTasks.set(index, task.serialise());
         save();
     }
 
-    private void load() throws IbatunException {
-        Path p = Paths.get(target);
-        if (!Files.exists(p)) {
-            return;
-        }
-
-        try (var lines = Files.lines(p)) {
-            lines.forEach(serTasks::add);
-        } catch (java.io.IOException e) {
-            throw new IbatunException("Failed to read from storage");
-        }
-        List<String> invalidTasks = new ArrayList<>();
-        for (String serTask : serTasks) {
-            Task task = deser(serTask);
-            if (task != null) {
-                tasks.add(task);
-            } else {
-                invalidTasks.add(serTask);
+    private void load() {
+        try {
+            Path filePath = Paths.get(path);
+            if (Files.exists(filePath)) {
+                String content = Files.readString(filePath);
+                if (!content.isBlank()) {
+                    tasks = mapper.readValue(content, new TypeReference<List<Task>>() {
+                    });
+                }
             }
-        }
-        if (!invalidTasks.isEmpty()) {
-            onRespond.accept("Some tasks failed to load:", invalidTasks.toArray(new String[0]));
-            throw new IbatunException("");
+        } catch (InvalidPathException | IOException | DateTimeParseException e) {
+            onRespond
+                    .accept("Error: Failed to load tasks from storage.",
+                            new String[] { "Make sure the file path is valid and readable.",
+                                "If you decide to continue, the storage might be overwritten." });
         }
     }
 
     private void save() {
         try {
-            Files.write(Paths.get(target), serTasks);
-        } catch (java.io.IOException e) {
+            Path filePath = Paths.get(path);
+            String content = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tasks);
+            Files.writeString(filePath, content);
+        } catch (InvalidPathException | IOException e) {
             onRespond
-                    .accept("Failed to save tasks to storage",
-                            new String[] { "Your recent changes might not be saved." });
-        }
-    }
-
-    private static Task deser(String input) {
-        if (input.isBlank()) {
-            return null;
-        }
-        try {
-            return switch (input.charAt(0)) {
-            case 'T' -> Todo.deserialise(input);
-            case 'D' -> Deadline.deserialise(input);
-            case 'E' -> Event.deserialise(input);
-            default -> null;
-            };
-        } catch (IbatunException | DateTimeParseException e) {
-            return null;
+                    .accept("Error: Failed to save tasks to storage.",
+                            new String[] { "Make sure the file path is valid and writable." });
         }
     }
 }
