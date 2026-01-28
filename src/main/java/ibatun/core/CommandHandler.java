@@ -14,16 +14,51 @@ import ibatun.core.tasks.Todo;
 import ibatun.errors.IbatunException;
 import ibatun.util.DatetimeConverter;
 
+/**
+ * Handles user commands and interacts with the task storage.
+ */
 public class CommandHandler {
+    /**
+     * Error message for empty todo description.
+     */
     private static final String TODO_ERROR = "The description of a todo cannot be empty.";
+
+    /**
+     * Error message for malformed deadline command.
+     */
     private static final String DEADLINE_ERROR = "Deadline must have a /by clause.";
+
+    /**
+     * Error message for malformed event command.
+     */
     private static final String EVENT_ERROR = "Event must have /from and /to clauses.";
+
+    /**
+     * Error message for invalid task number.
+     */
     private static final String TASK_NUM_ERROR = "Please provide a valid task number.";
 
+    /**
+     * Mapping of command strings to their handler functions.
+     */
     private final Map<String, Function<String[], String>> commands;
+
+    /**
+     * Callback to respond to the user.
+     */
     private final BiConsumer<String, String[]> onRespond;
+
+    /**
+     * The task storage.
+     */
     private final TaskStore store;
 
+    /**
+     * Constructor for CommandHandler.
+     *
+     * @param onRespond The callback to respond to the user
+     * @param store     The task storage
+     */
     public CommandHandler(BiConsumer<String, String[]> onRespond, TaskStore store) {
         this.commands = Map
                 .of("todo", this::handleTodo, "deadline", this::handleDeadline, "event", this::handleEvent, "list",
@@ -33,6 +68,13 @@ public class CommandHandler {
         this.store = store;
     }
 
+    /**
+     * Handles a user command.
+     *
+     * @param input The user input split into command and arguments
+     * @return true if the application should continue running, false if it should exit
+     * @throws IbatunException if there is an error processing the command
+     */
     public boolean handle(String[] input) throws IbatunException {
         String command = input[0].toLowerCase();
 
@@ -54,6 +96,12 @@ public class CommandHandler {
         return true;
     }
 
+    /**
+     * Handles the 'todo' command.
+     *
+     * @param args The arguments for the todo command
+     * @return Error message if any, null otherwise
+     */
     private String handleTodo(String[] args) {
         String description = String.join(" ", args);
         if (description.isBlank()) {
@@ -66,6 +114,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'deadline' command.
+     *
+     * @param args The arguments for the deadline command
+     * @return Error message if any, null otherwise
+     */
     private String handleDeadline(String[] args) {
         String[] parts = splitByDelimiter(args, "/by");
 
@@ -86,6 +140,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'event' command.
+     *
+     * @param args The arguments for the event command
+     * @return Error message if any, null otherwise
+     */
     private String handleEvent(String[] args) {
         String[] parts = splitByDelimiter(args, "/from", "/to");
 
@@ -108,6 +168,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'list' command.
+     *
+     * @param args The arguments for the list command
+     * @return Error message if any, null otherwise
+     */
     private String handleList(String[] args) {
         List<Task> tasks = store.listTasks();
         if (tasks.isEmpty()) {
@@ -122,6 +188,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'mark' command.
+     *
+     * @param args The arguments for the mark command
+     * @return Error message if any, null otherwise
+     */
     private String handleMark(String[] args) {
         int idx;
         try {
@@ -143,6 +215,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'unmark' command.
+     *
+     * @param args The arguments for the unmark command
+     * @return Error message if any, null otherwise
+     */
     private String handleUnmark(String[] args) {
         int idx;
         try {
@@ -164,6 +242,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'delete' command.
+     *
+     * @param args The arguments for the delete command
+     * @return Error message if any, null otherwise
+     */
     private String handleDelete(String[] args) {
         int idx;
         try {
@@ -203,10 +287,22 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Gets a message indicating the current task count.
+     *
+     * @return The task count message
+     */
     private String getTaskCountMsg() {
         return String.format("You have %d tasks in total now.", store.listTasks().size());
     }
 
+    /**
+     * Splits the arguments by the specified delimiters.
+     *
+     * @param args       The arguments to split
+     * @param delimiters The delimiters to split by
+     * @return The split segments
+     */
     private String[] splitByDelimiter(String[] args, String... delimiters) {
         List<String> result = new ArrayList<>();
         StringBuilder current = new StringBuilder();

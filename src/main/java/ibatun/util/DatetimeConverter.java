@@ -10,9 +10,21 @@ import java.util.Locale;
 
 import ibatun.errors.IbatunException;
 
+/**
+ * Utility class for converting between LocalDateTime objects and their string representations.
+ *
+ * @author Binh
+ * @version 1.0
+ */
 public class DatetimeConverter {
+    /**
+     * The current date and time.
+     */
     private static final LocalDateTime NOW = LocalDateTime.now();
 
+    /**
+     * The list of input date/time formatters.
+     */
     private static final List<DateTimeFormatter> INPUT_FORMATTERS = List
             .of(
                     // Date (with year, with time)
@@ -58,16 +70,44 @@ public class DatetimeConverter {
                             .parseDefaulting(ChronoField.DAY_OF_MONTH, NOW.getDayOfMonth())
                             .toFormatter(Locale.ENGLISH));
 
+    /**
+     * The formatter for dates in the same year.
+     */
     private static final DateTimeFormatter SAME_YEAR = DateTimeFormatter.ofPattern("MMM d");
+
+    /**
+     * The formatter for dates in different years.
+     */
     private static final DateTimeFormatter DIFFERENT_YEAR = DateTimeFormatter.ofPattern("MMM d, yyyy");
+
+    /**
+     * The formatter for dates and times in the same year.
+     */
     private static final DateTimeFormatter SAME_YEAR_T = DateTimeFormatter.ofPattern("MMM d 'at' HH:mm");
+
+    /**
+     * The formatter for dates and times in different years.
+     */
     private static final DateTimeFormatter DIFFERENT_YEAR_T = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm");
+
+    /**
+     * The formatter for times on the same date.
+     */
     private static final DateTimeFormatter SAME_DATE_T = DateTimeFormatter.ofPattern("HH:mm");
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private DatetimeConverter() {
-        // Prevent instantiation
     }
 
+    /**
+     * Parses a date/time string into a LocalDateTime object.
+     *
+     * @param s The date/time string
+     * @return The parsed LocalDateTime object
+     * @throws IbatunException if the string cannot be parsed
+     */
     public static LocalDateTime parse(String s) throws IbatunException {
         for (DateTimeFormatter formatter : INPUT_FORMATTERS) {
             try {
@@ -79,6 +119,12 @@ public class DatetimeConverter {
         throw new IbatunException("Invalid date/time: " + s);
     }
 
+    /**
+     * Formats a LocalDateTime object into a string.
+     *
+     * @param dateTime The LocalDateTime object
+     * @return The formatted date/time string
+     */
     public static String format(LocalDateTime dateTime) {
         DateTimeFormatter formatter;
         boolean includeTime = dateTime.getHour() != 0 || dateTime.getMinute() != 0 || dateTime.getSecond() != 0;
