@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import ibatun.core.tasks.*;
+import ibatun.core.tasks.Deadline;
+import ibatun.core.tasks.Event;
+import ibatun.core.tasks.Task;
+import ibatun.core.tasks.Todo;
 import ibatun.errors.IbatunException;
 import ibatun.util.DatetimeConverter;
 
@@ -22,14 +25,10 @@ public class CommandHandler {
     private final TaskStore store;
 
     public CommandHandler(BiConsumer<String, String[]> onRespond, TaskStore store) {
-        this.commands = Map.of(
-                "todo", this::handleTodo,
-                "deadline", this::handleDeadline,
-                "event", this::handleEvent,
-                "list", this::handleList,
-                "mark", this::handleMark,
-                "unmark", this::handleUnmark,
-                "delete", this::handleDelete);
+        this.commands = Map
+                .of("todo", this::handleTodo, "deadline", this::handleDeadline, "event", this::handleEvent, "list",
+                        this::handleList, "mark", this::handleMark, "unmark", this::handleUnmark, "delete",
+                        this::handleDelete);
         this.onRespond = onRespond;
         this.store = store;
     }
@@ -83,9 +82,7 @@ public class CommandHandler {
 
         Task newTask = new Deadline(parts[0], by);
         store.addTask(newTask);
-        onRespond.accept(
-                "Got it. I've added this deadline:",
-                new String[] { newTask.toString(), getTaskCountMsg() });
+        onRespond.accept("Got it. I've added this deadline:", new String[] { newTask.toString(), getTaskCountMsg() });
         return null;
     }
 
@@ -107,9 +104,7 @@ public class CommandHandler {
         }
         Task newTask = new Event(parts[0], from, to);
         store.addTask(newTask);
-        onRespond.accept(
-                "Got it. I've added this event:",
-                new String[] { newTask.toString(), getTaskCountMsg() });
+        onRespond.accept("Got it. I've added this event:", new String[] { newTask.toString(), getTaskCountMsg() });
         return null;
     }
 
