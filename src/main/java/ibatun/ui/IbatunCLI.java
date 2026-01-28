@@ -36,9 +36,7 @@ public class IbatunCli {
     }
 
     private static void greet() {
-        respond(
-                String.format("Wassup! I'm %s.", BOT_NAME),
-                "How do I help ya?");
+        respond(String.format("Wassup! I'm %s.", BOT_NAME), "How do I help ya?");
     }
 
     private static void farewell() {
