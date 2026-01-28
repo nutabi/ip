@@ -265,6 +265,12 @@ public class CommandHandler {
         return null;
     }
 
+    /**
+     * Handles the 'find' command.
+     *
+     * @param args The arguments for the find command
+     * @return Error message if any, null otherwise
+     */
     private String handleFind(String[] args) {
         List<Task> matchedTasks = store.listTasks().stream().filter(task -> {
             for (String keyword : args) {

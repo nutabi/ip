@@ -11,6 +11,12 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**
+ * Adapter for serializing and deserializing LocalDateTime objects with Gson.
+ *
+ * @author Binh
+ * @version 1.0
+ */
 public class DatetimeAdapter implements JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 

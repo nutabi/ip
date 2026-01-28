@@ -26,6 +26,14 @@ import ibatun.util.TaskAdapter;
  */
 public class TaskStore {
     /**
+     * The Gson instance for JSON serialization and deserialization.
+     */
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeHierarchyAdapter(Task.class, new TaskAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new DatetimeAdapter())
+            .create();
+
+    /**
      * The file path for storing tasks.
      */
     private final String path;
@@ -34,10 +42,6 @@ public class TaskStore {
      * Callback to respond to the user.
      */
     private final BiConsumer<String, String[]> onRespond;
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeHierarchyAdapter(Task.class, new TaskAdapter())
-            .registerTypeAdapter(LocalDateTime.class, new DatetimeAdapter())
-            .create();
 
     /**
      * The list of tasks.

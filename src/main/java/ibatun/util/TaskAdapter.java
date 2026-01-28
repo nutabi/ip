@@ -18,6 +18,12 @@ import ibatun.core.tasks.Event;
 import ibatun.core.tasks.Task;
 import ibatun.core.tasks.Todo;
 
+/**
+ * Adapter for serializing and deserializing Task objects with Gson.
+ *
+ * @author Binh
+ * @version 1.0
+ */
 public class TaskAdapter implements JsonSerializer<Task>, JsonDeserializer<Task> {
     private final Gson defaultGson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new DatetimeAdapter())
