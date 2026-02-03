@@ -1,5 +1,8 @@
 package ibatun.ui;
 
+import ibatun.core.CommandHandler;
+import ibatun.core.TaskStore;
+import ibatun.errors.IbatunException;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,6 +15,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * The graphical user interface for the Ibatun application.
+ *
+ * @author Binh
+ * @version 1.0
+ */
 public class IbatunGui extends Application {
     private Image ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
     private Image userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));

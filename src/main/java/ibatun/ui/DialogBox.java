@@ -9,14 +9,30 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
+/**
+ * A dialog box consisting of an ImageView to represent the speaker's face and a label containing text from the speaker.
+ */
 public class DialogBox extends HBox {
     private ImageView picture;
     private Label text;
 
+    /**
+     * Constructs a DialogBox with the specified picture and message.
+     *
+     * @param pic The image to be displayed
+     * @param msg The message to be displayed
+     */
     public DialogBox(Image pic, String msg) {
         this(pic, msg, false);
     }
 
+    /**
+     * Constructs a DialogBox with the specified picture, message, and speaker type.
+     *
+     * @param pic    The image to be displayed
+     * @param msg    The message to be displayed
+     * @param isUser Indicates if the speaker is the user
+     */
     public DialogBox(Image pic, String msg, boolean isUser) {
         picture = new ImageView(pic);
         picture.setFitHeight(60.0);
