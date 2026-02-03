@@ -45,7 +45,7 @@ test {
 }
 
 application {
-    mainClass.set("ibatun.ui.IbatunCli")
+    mainClass.set("ibatun.GuiLauncher")
 }
 
 shadowJar {
