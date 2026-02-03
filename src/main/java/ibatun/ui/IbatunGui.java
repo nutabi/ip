@@ -17,16 +17,16 @@ public class IbatunGui extends Application {
     private Image userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));
     private Scene primaryScene;
     private VBox viewBox;
+    private TaskStore store = new TaskStore("data.local.json", this::handleOnRespond);
+    private CommandHandler handler = new CommandHandler(this::handleOnRespond, store);
 
     @Override
     public void start(Stage primaryStage) {
         setupStage(primaryStage);
         setupPrimaryScene();
 
-        // Fun stuff here
-        DialogBox db = new DialogBox(ibatunImage, "Hello!");
-        DialogBox db2 = new DialogBox(userImage, "Hi!", true);
-        viewBox.getChildren().addAll(db, db2);
+        // Greet
+        handleOnRespond("Hello! I'm Ibatun. How can I assist you today?", new String[] {});
 
         primaryStage.setScene(primaryScene);
         primaryStage.show();
@@ -52,24 +52,73 @@ public class IbatunGui extends Application {
     private Node setupViewBox() {
         viewBox = new VBox();
         viewBox.setStyle("-fx-padding: 10; -fx-spacing: 10;");
-        ScrollPane pane = new ScrollPane(viewBox);
-        pane.setStyle("-fx-control-inner-background: #f5f5f5;");
-        pane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        pane.setFitToWidth(true);
-        return pane;
+        ScrollPane scrollPane = new ScrollPane(viewBox);
+        scrollPane.setStyle("-fx-control-inner-background: #f5f5f5;");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+
+        // Automatically scroll to bottom when content changes
+        viewBox.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+
+        return scrollPane;
     }
 
     private Node setupInputBox() {
         TextField userInput = new TextField();
         userInput.setPromptText("Type your message here...");
         userInput.setStyle("-fx-padding: 8; -fx-font-size: 14;");
+        userInput.setOnAction(event -> {
+            String command = userInput.getText();
+            if (!command.trim().isEmpty()) {
+                handleOnSend(command);
+                userInput.clear();
+            }
+        });
 
         Button sendButton = new Button("Send");
         sendButton.setStyle("-fx-padding: 8 20; -fx-font-size: 14; -fx-min-width: 70;");
+        sendButton.setOnAction(event -> {
+            String command = userInput.getText();
+            if (!command.trim().isEmpty()) {
+                handleOnSend(command);
+                userInput.clear();
+            }
+        });
 
         HBox inputBox = new HBox(userInput, sendButton);
         inputBox.setStyle("-fx-padding: 10; -fx-spacing: 10;");
         HBox.setHgrow(userInput, Priority.ALWAYS);
         return inputBox;
+    }
+
+    private void handleOnRespond(String response, String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(response).append("\n");
+        for (String arg : args) {
+            sb.append("    ").append(arg).append("\n");
+        }
+        addDialog(sb.toString(), false);
+    }
+
+    private void handleOnSend(String command) {
+        addDialog(command, true);
+        try {
+            if (!handler.handle(command.split(" "))) {
+                // Exit
+                System.exit(0);
+            }
+        } catch (IbatunException e) {
+            addDialog(e.getMessage(), false);
+        }
+    }
+
+    private void addDialog(String message, boolean isUser) {
+        DialogBox dialog;
+        if (isUser) {
+            dialog = new DialogBox(userImage, message, true);
+        } else {
+            dialog = new DialogBox(ibatunImage, message);
+        }
+        viewBox.getChildren().add(dialog);
     }
 }
