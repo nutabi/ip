@@ -1,0 +1,44 @@
+package ibatun.ui;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+
+public class DialogBox extends HBox {
+    private ImageView picture;
+    private Label text;
+
+    public DialogBox(Image pic, String msg) {
+        this(pic, msg, false);
+    }
+
+    public DialogBox(Image pic, String msg, boolean isUser) {
+        picture = new ImageView(pic);
+        picture.setFitHeight(60.0);
+        picture.setFitWidth(60.0);
+        picture.setPreserveRatio(true);
+
+        Circle clip = new Circle(30, 30, 30);
+        picture.setClip(clip);
+
+        text = new Label(msg);
+        text.setWrapText(true);
+
+        this.setSpacing(10.0);
+
+        if (isUser) {
+            this.setAlignment(Pos.TOP_RIGHT);
+            this.getChildren().addAll(text, picture);
+        } else {
+            this.setAlignment(Pos.TOP_LEFT);
+            this.getChildren().addAll(picture, text);
+        }
+
+        VBox.setVgrow(this, Priority.ALWAYS);
+    }
+}
