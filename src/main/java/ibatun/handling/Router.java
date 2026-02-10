@@ -17,7 +17,7 @@ public final class Router {
      * @param store     The task store
      * @param onRespond The consumer function to handle responses
      */
-    Router(TaskStore store, Consumer<String> onRespond) {
+    public Router(TaskStore store, Consumer<String> onRespond) {
         this.onRespond = onRespond;
         this.handlers = new Handler[] { new TodoHandler(store, onRespond), new DeadlineHandler(store, onRespond),
             new EventHandler(store, onRespond), new ListHandler(store, onRespond), new MarkHandler(store, onRespond),
@@ -30,13 +30,21 @@ public final class Router {
      *
      * @param args The command arguments
      */
-    public void route(String[] args) {
+    public boolean route(String[] args) {
+        if (args.length == 0) {
+            onRespond.accept("No command provided.");
+            return true;
+        } else if (args[0].equals("bye")) {
+            return false;
+        }
+
         for (Handler handler : handlers) {
             if (handler.canHandle(args[0])) {
                 handler.handle(args);
-                return;
+                return true;
             }
         }
         onRespond.accept("I'm sorry, but I don't know what that command means.");
+        return true;
     }
 }

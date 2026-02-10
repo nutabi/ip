@@ -10,7 +10,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.google.gson.Gson;
@@ -41,7 +40,7 @@ public class TaskStore {
     /**
      * Callback to respond to the user.
      */
-    private final BiConsumer<String, String[]> onRespond;
+    private final Consumer<String> onRespond;
 
     /**
      * The list of tasks.
@@ -54,7 +53,7 @@ public class TaskStore {
      * @param path      The file path for storing tasks
      * @param onRespond The callback to respond to the user
      */
-    public TaskStore(String path, BiConsumer<String, String[]> onRespond) {
+    public TaskStore(String path, Consumer<String> onRespond) {
         this.path = path;
         this.onRespond = onRespond;
         this.tasks = new ArrayList<>();
@@ -133,9 +132,9 @@ public class TaskStore {
             }
         } catch (InvalidPathException | IOException | DateTimeParseException e) {
             onRespond
-                    .accept("Error: Failed to load tasks from storage.",
-                            new String[] { "Make sure the file path is valid and readable.",
-                                "If you decide to continue, the storage might be overwritten." });
+                    .accept("Error: Failed to load tasks from storage."
+                            + " Make sure the file path is valid and readable."
+                            + " If you decide to continue, the storage might be overwritten.");
         }
     }
 
@@ -153,8 +152,8 @@ public class TaskStore {
             Files.writeString(filePath, json);
         } catch (InvalidPathException | IOException e) {
             onRespond
-                    .accept("Error: Failed to save tasks to storage.",
-                            new String[] { "Make sure the file path is valid and writable." });
+                    .accept("Error: Failed to save tasks to storage."
+                            + " Make sure the file path is valid and writable.");
         }
     }
 }
