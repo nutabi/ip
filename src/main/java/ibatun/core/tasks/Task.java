@@ -61,6 +61,6 @@ public abstract sealed class Task permits Todo, Deadline, Event {
 
     @Override
     public String toString() {
-        return String.format("%s %s", (isDone ? "[X]" : "[ ]"), name);
+        return String.format("[%s] %s", (isDone ? 'X' : ' '), name);
     }
 }
