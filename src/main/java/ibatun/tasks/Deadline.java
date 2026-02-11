@@ -1,4 +1,4 @@
-package ibatun.core.tasks;
+package ibatun.tasks;
 
 import java.time.LocalDateTime;
 

@@ -1,8 +1,9 @@
 package ibatun.ui;
 
-import ibatun.core.CommandHandler;
-import ibatun.core.TaskStore;
+import ibatun.storage.JsonStore;
+import ibatun.storage.TaskStore;
 import ibatun.errors.IbatunException;
+import ibatun.handling.Router;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,12 +23,23 @@ import javafx.stage.Stage;
  * @version 1.0
  */
 public class IbatunGui extends Application {
-    private Image ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
-    private Image userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));
+    private Image ibatunImage;
+    private Image userImage;
     private Scene primaryScene;
     private VBox viewBox;
-    private TaskStore store = new TaskStore("data.local.json", this::handleOnRespond);
-    private CommandHandler handler = new CommandHandler(this::handleOnRespond, store);
+    private TaskStore store;
+    private Router router;
+
+    public IbatunGui() {
+        this.ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
+        this.userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));
+        try {
+            this.store = new JsonStore("data.local.json");
+        } catch (IbatunException e) {
+            handleOnRespond(e.getMessage());
+        }
+        this.router = new Router(store, this::handleOnRespond);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -35,7 +47,7 @@ public class IbatunGui extends Application {
         setupPrimaryScene();
 
         // Greet
-        handleOnRespond("Hello! I'm Ibatun. How can I assist you today?", new String[] {});
+        handleOnRespond("Hello! I'm Ibatun. How can I assist you today?");
 
         primaryStage.setScene(primaryScene);
         primaryStage.show();
@@ -100,24 +112,15 @@ public class IbatunGui extends Application {
         return inputBox;
     }
 
-    private void handleOnRespond(String response, String[] args) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(response).append("\n");
-        for (String arg : args) {
-            sb.append("    ").append(arg).append("\n");
-        }
-        addDialog(sb.toString(), false);
+    private void handleOnRespond(String response) {
+        addDialog(response, false);
     }
 
     private void handleOnSend(String command) {
         addDialog(command, true);
-        try {
-            if (!handler.handle(command.split(" "))) {
-                // Exit
-                System.exit(0);
-            }
-        } catch (IbatunException e) {
-            addDialog(e.getMessage(), false);
+        if (!router.route(command.split(" "))) {
+            // Exit
+            System.exit(0);
         }
     }
 
