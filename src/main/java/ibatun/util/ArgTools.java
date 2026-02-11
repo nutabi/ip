@@ -18,6 +18,9 @@ public class ArgTools {
      * @return The split segments
      */
     public static String[] splitByDelimiters(String[] args, String... delimiters) {
+        assert args != null : "Arguments cannot be null";
+        assert delimiters != null : "Delimiters cannot be null";
+
         List<String> result = new ArrayList<>();
         StringBuilder current = new StringBuilder();
         int delimiterIndex = 0;

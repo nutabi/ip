@@ -44,6 +44,8 @@ public final class JsonStore extends TaskStore {
      */
     public JsonStore(String targetPath) throws IbatunException {
         super(loadTasks(targetPath));
+        assert targetPath != null : "Target path cannot be null";
+        assert !targetPath.isBlank() : "Target path cannot be blank";
         this.targetPath = targetPath;
     }
 

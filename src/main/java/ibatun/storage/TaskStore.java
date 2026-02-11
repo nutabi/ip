@@ -15,6 +15,8 @@ public abstract class TaskStore {
     protected final List<Task> tasks;
 
     protected TaskStore(List<Task> tasks) {
+        assert tasks != null : "Tasks list cannot be null";
+
         this.tasks = tasks;
     }
 
@@ -49,6 +51,7 @@ public abstract class TaskStore {
      * @throws IbatunException if there is an error adding the task
      */
     public void add(Task task) throws IbatunException {
+        assert task != null : "Task to add cannot be null";
         tasks.add(task);
     }
 
@@ -73,6 +76,7 @@ public abstract class TaskStore {
      * @throws IbatunException if there is an error modifying the task
      */
     public void modify(int index, Consumer<Task> modifier) throws IbatunException {
+        assert modifier != null : "Modifier cannot be null";
         if (index < 0 || index >= tasks.size()) {
             throw new IbatunTaskNotFoundException();
         }
