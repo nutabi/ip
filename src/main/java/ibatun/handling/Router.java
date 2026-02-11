@@ -1,5 +1,6 @@
 package ibatun.handling;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 import ibatun.storage.TaskStore;
@@ -37,13 +38,18 @@ public final class Router {
         if (args.length == 0) {
             onRespond.accept("No command provided.");
             return true;
-        } else if (args[0].equals("bye")) {
+        }
+
+        String command = args[0];
+        if (command.equals("bye")) {
             return false;
         }
 
+        String[] remainingArgs = Arrays.copyOfRange(args, 1, args.length);
+
         for (Handler handler : handlers) {
-            if (handler.canHandle(args[0])) {
-                handler.handle(args);
+            if (handler.canHandle(command)) {
+                handler.handle(remainingArgs);
                 return true;
             }
         }
