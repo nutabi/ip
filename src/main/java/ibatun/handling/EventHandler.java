@@ -51,6 +51,11 @@ final class EventHandler extends Handler {
             return;
         }
 
+        if (to.isBefore(from)) {
+            fail("The end time cannot be before the start time.");
+            return;
+        }
+
         Task newTask = new Event(parts[0], from, to);
         try {
             store.add(newTask);

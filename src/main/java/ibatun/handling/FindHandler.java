@@ -19,10 +19,16 @@ final class FindHandler extends Handler {
 
     @Override
     void handle(String[] args) {
+        String[] keywords = java.util.Arrays.stream(args).filter(keyword -> !keyword.isBlank()).toArray(String[]::new);
+        if (keywords.length == 0) {
+            fail("Please provide at least one keyword to find.");
+            return;
+        }
+
         List<Task> matchedTasks;
         try {
             matchedTasks = store.list().stream().filter(task -> {
-                for (String keyword : args) {
+                for (String keyword : keywords) {
                     if (task.getName().contains(keyword)) {
                         return true;
                     }
