@@ -2,7 +2,7 @@ package ibatun.handling;
 
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 
 /**
  * A router class for directing commands to appropriate handlers.

@@ -2,8 +2,9 @@ package ibatun.handling;
 
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 import ibatun.core.tasks.Todo;
+import ibatun.errors.IbatunException;
 
 /**
  * A handler for creating {@code Todo} tasks.
@@ -36,7 +37,12 @@ final class TodoHandler extends Handler {
 
         // Add the todo task to the store
         Todo todo = new Todo(description);
-        store.addTask(todo);
+        try {
+            store.add(todo);
+        } catch (IbatunException e) {
+            fail(e.getMessage());
+            return;
+        }
         succeed("Got it. I've added this todo: " + todo.toString());
         return;
     }

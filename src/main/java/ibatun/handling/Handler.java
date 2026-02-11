@@ -2,7 +2,8 @@ package ibatun.handling;
 
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.errors.IbatunException;
+import ibatun.storage.TaskStore;
 
 /**
  * An abstract handler class that provides a structure for handling commands and responses.
@@ -45,6 +46,15 @@ abstract class Handler {
      */
     protected void fail(String message) {
         onRespond.accept("Oops! Something went wrong :D\n\n" + message);
+    }
+
+    /**
+     * Sends a failure message to the response handler based on the given exception.
+     *
+     * @param e The exception containing the failure message
+     */
+    protected void fail(IbatunException e) {
+        fail(e.getMessage());
     }
 
     /**

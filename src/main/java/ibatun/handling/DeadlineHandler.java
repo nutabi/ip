@@ -3,7 +3,7 @@ package ibatun.handling;
 import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 import ibatun.core.tasks.Deadline;
 import ibatun.core.tasks.Task;
 import ibatun.errors.IbatunException;
@@ -44,7 +44,12 @@ final class DeadlineHandler extends Handler {
         }
 
         Task newTask = new Deadline(parts[0], by);
-        store.addTask(newTask);
+        try {
+            store.add(newTask);
+        } catch (IbatunException e) {
+            fail(e.getMessage());
+            return;
+        }
         succeed("Got it. I've added this deadline: " + newTask.toString());
         return;
     }

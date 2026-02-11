@@ -3,8 +3,9 @@ package ibatun.handling;
 import java.util.List;
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 import ibatun.core.tasks.Task;
+import ibatun.errors.IbatunException;
 
 final class FindHandler extends Handler {
     FindHandler(TaskStore store, Consumer<String> onRespond) {
@@ -18,14 +19,20 @@ final class FindHandler extends Handler {
 
     @Override
     void handle(String[] args) {
-        List<Task> matchedTasks = store.listTasks().stream().filter(task -> {
-            for (String keyword : args) {
-                if (task.getName().contains(keyword)) {
-                    return true;
+        List<Task> matchedTasks;
+        try {
+            matchedTasks = store.list().stream().filter(task -> {
+                for (String keyword : args) {
+                    if (task.getName().contains(keyword)) {
+                        return true;
+                    }
                 }
-            }
-            return false;
-        }).toList();
+                return false;
+            }).toList();
+        } catch (IbatunException e) {
+            fail(e);
+            return;
+        }
 
         if (matchedTasks.isEmpty()) {
             succeed("No matching tasks found.");

@@ -13,6 +13,6 @@ public class IbatunException extends Exception {
      * @param message The error message
      */
     public IbatunException(String message) {
-        super(String.format("Oopsie! %s", message));
+        super(String.format("Oopsie!\n%s", message));
     }
 }

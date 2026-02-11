@@ -3,7 +3,7 @@ package ibatun.handling;
 import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 import ibatun.core.tasks.Event;
 import ibatun.core.tasks.Task;
 import ibatun.errors.IbatunException;
@@ -52,7 +52,12 @@ final class EventHandler extends Handler {
         }
 
         Task newTask = new Event(parts[0], from, to);
-        store.addTask(newTask);
+        try {
+            store.add(newTask);
+        } catch (IbatunException e) {
+            fail(e.getMessage());
+            return;
+        }
         succeed("Got it. I've added this event: " + newTask.toString());
         return;
     }

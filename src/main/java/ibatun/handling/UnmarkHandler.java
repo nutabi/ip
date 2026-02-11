@@ -1,7 +1,8 @@
 package ibatun.handling;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 import ibatun.core.tasks.Task;
+import ibatun.errors.IbatunException;
 
 /**
  * Handler for the "unmark" command, which unmarks a task as not done.
@@ -25,17 +26,19 @@ final class UnmarkHandler extends Handler {
 
         try {
             int taskNum = Integer.parseInt(args[1]) - 1;
-            Task t = store.getTask(taskNum);
+            Task t = store.get(taskNum);
             if (!t.isDone()) {
                 fail("This task is already unmarked:\n  " + t.toString());
                 return;
             }
-            store.modifyTask(taskNum, Task::unmark);
+            store.modify(taskNum, Task::unmark);
             succeed("Nice! I've unmarked this task as done:\n  " + t.toString());
         } catch (NumberFormatException e) {
             fail("Please provide a valid task number.");
         } catch (IndexOutOfBoundsException e) {
             fail("Task number out of range.");
+        } catch (IbatunException e) {
+            fail(e);
         }
     }
 }

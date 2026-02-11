@@ -1,6 +1,8 @@
 package ibatun.ui;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.JsonStore;
+import ibatun.storage.TaskStore;
+import ibatun.errors.IbatunException;
 import ibatun.handling.Router;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -21,12 +23,23 @@ import javafx.stage.Stage;
  * @version 1.0
  */
 public class IbatunGui extends Application {
-    private Image ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
-    private Image userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));
+    private Image ibatunImage;
+    private Image userImage;
     private Scene primaryScene;
     private VBox viewBox;
-    private TaskStore store = new TaskStore("data.local.json", this::handleOnRespond);
-    private Router router = new Router(store, this::handleOnRespond);
+    private TaskStore store;
+    private Router router;
+
+    public IbatunGui() {
+        this.ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
+        this.userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));
+        try {
+            this.store = new JsonStore("data.local.json");
+        } catch (IbatunException e) {
+            handleOnRespond(e.getMessage());
+        }
+        this.router = new Router(store, this::handleOnRespond);
+    }
 
     @Override
     public void start(Stage primaryStage) {

@@ -2,8 +2,9 @@ package ibatun.handling;
 
 import java.util.function.Consumer;
 
-import ibatun.core.TaskStore;
+import ibatun.storage.TaskStore;
 import ibatun.core.tasks.Task;
+import ibatun.errors.IbatunException;
 
 /**
  * Handler for the "delete" command, which deletes a task from the task store.
@@ -27,17 +28,19 @@ final class DeleteHandler extends Handler {
 
         try {
             int taskNum = Integer.parseInt(args[1]) - 1;
-            Task t = store.getTask(taskNum);
-            store.removeTask(taskNum);
+            Task t = store.get(taskNum);
+            store.remove(taskNum);
             succeed("Noted. I've removed this task:\n  "
                     + t.toString()
                     + "\nNow you have "
-                    + store.listTasks().size()
+                    + store.list().size()
                     + " tasks in the list.");
         } catch (NumberFormatException e) {
             fail("Please provide a valid task number.");
         } catch (IndexOutOfBoundsException e) {
             fail("Task number out of range.");
+        } catch (IbatunException e) {
+            fail(e);
         }
     }
 
