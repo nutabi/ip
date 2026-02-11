@@ -26,6 +26,9 @@ abstract class Handler {
      * @param onRespond The consumer function to handle responses
      */
     protected Handler(TaskStore store, Consumer<String> onRespond) {
+        assert store != null : "TaskStore cannot be null";
+        assert onRespond != null : "Response handler cannot be null";
+
         this.store = store;
         this.onRespond = onRespond;
     }
