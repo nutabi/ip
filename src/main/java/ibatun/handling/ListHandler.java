@@ -1,6 +1,8 @@
 package ibatun.handling;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.function.Consumer;
 
 import ibatun.errors.IbatunException;
@@ -39,10 +41,11 @@ final class ListHandler extends Handler {
             return;
         }
 
-        for (int i = 0; i < tasks.size(); i++) {
-            response.append(i + 1).append(". ").append(tasks.get(i).toString()).append("\n");
-        }
-        succeed(response.toString().trim());
+        String body = IntStream
+                .range(0, tasks.size())
+                .mapToObj(i -> (i + 1) + ". " + tasks.get(i))
+                .collect(Collectors.joining("\n"));
+        succeed(response.append(body).toString().trim());
     }
 
 }
