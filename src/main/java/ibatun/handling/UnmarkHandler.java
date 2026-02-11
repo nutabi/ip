@@ -1,8 +1,8 @@
 package ibatun.handling;
 
+import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
-import ibatun.errors.IbatunException;
 
 /**
  * Handler for the "unmark" command, which unmarks a task as not done.

@@ -2,9 +2,9 @@ package ibatun.handling;
 
 import java.util.function.Consumer;
 
+import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 import ibatun.tasks.Todo;
-import ibatun.errors.IbatunException;
 
 /**
  * A handler for creating {@code Todo} tasks.

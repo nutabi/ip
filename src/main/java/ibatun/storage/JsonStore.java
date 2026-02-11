@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import ibatun.errors.IbatunException;
-import ibatun.errors.IbatunIOException;
+import ibatun.errors.IbatunFileException;
 import ibatun.tasks.Task;
 import ibatun.util.DatetimeAdapter;
 import ibatun.util.TaskAdapter;
@@ -81,7 +81,7 @@ public final class JsonStore extends TaskStore {
                 }
             }
         } catch (InvalidPathException | IOException | DateTimeParseException e) {
-            throw new IbatunIOException("Failed to load data");
+            throw new IbatunFileException("Failed to load data");
         }
         return tasks;
     }
@@ -92,7 +92,7 @@ public final class JsonStore extends TaskStore {
             String json = gson.toJson(tasks);
             Files.writeString(filePath, json);
         } catch (InvalidPathException | IOException e) {
-            throw new IbatunIOException("Failed to save data");
+            throw new IbatunFileException("Failed to save data");
         }
     }
 }

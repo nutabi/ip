@@ -1,9 +1,9 @@
 package ibatun.ui;
 
-import ibatun.storage.JsonStore;
-import ibatun.storage.TaskStore;
 import ibatun.errors.IbatunException;
 import ibatun.handling.Router;
+import ibatun.storage.JsonStore;
+import ibatun.storage.TaskStore;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -30,6 +30,9 @@ public class IbatunGui extends Application {
     private TaskStore store;
     private Router router;
 
+    /**
+     * Constructs the Ibatun GUI application.
+     */
     public IbatunGui() {
         this.ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
         this.userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));

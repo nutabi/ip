@@ -2,9 +2,9 @@ package ibatun.handling;
 
 import java.util.function.Consumer;
 
+import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
-import ibatun.errors.IbatunException;
 
 /**
  * Handler for the "delete" command, which deletes a task from the task store.

@@ -8,6 +8,9 @@ import ibatun.errors.IbatunException;
 import ibatun.errors.IbatunTaskNotFoundException;
 import ibatun.tasks.Task;
 
+/**
+ * Abstract class representing a storage for tasks.
+ */
 public abstract class TaskStore {
     protected final List<Task> tasks;
 

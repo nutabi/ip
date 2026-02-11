@@ -10,14 +10,14 @@ import ibatun.storage.TaskStore;
  */
 abstract class Handler {
     /**
-     * The consumer function to handle responses.
-     */
-    private final Consumer<String> onRespond;
-
-    /**
      * The task store for managing tasks.
      */
     protected final TaskStore store;
+
+    /**
+     * The consumer function to handle responses.
+     */
+    private final Consumer<String> onRespond;
 
     /**
      * Constructs a Handler with the specified task store and response handler.

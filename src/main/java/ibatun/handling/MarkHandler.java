@@ -1,8 +1,8 @@
 package ibatun.handling;
 
+import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
-import ibatun.errors.IbatunException;
 
 /**
  * Handler for the "mark" command, which marks a task as done.

@@ -3,9 +3,9 @@ package ibatun.handling;
 import java.util.List;
 import java.util.function.Consumer;
 
+import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
-import ibatun.errors.IbatunException;
 
 final class FindHandler extends Handler {
     FindHandler(TaskStore store, Consumer<String> onRespond) {
