@@ -29,8 +29,12 @@ final class TodoHandler extends Handler {
 
     @Override
     void handle(String[] args) {
+        if (args.length == 0) {
+            fail("The description of a todo cannot be empty.");
+            return;
+        }
         String description = String.join(" ", args);
-        if (description.isEmpty()) {
+        if (description.isBlank()) {
             fail("The description of a todo cannot be empty.");
             return;
         }

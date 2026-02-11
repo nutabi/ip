@@ -19,13 +19,13 @@ final class MarkHandler extends Handler {
 
     @Override
     void handle(String[] args) {
-        if (args.length != 2) {
+        if (args.length != 1 || args[0].isBlank()) {
             fail("Please provide a valid task number.");
             return;
         }
 
         try {
-            int taskNum = Integer.parseInt(args[1]) - 1;
+            int taskNum = Integer.parseInt(args[0]) - 1;
             Task t = store.get(taskNum);
             if (t.isDone()) {
                 fail("This task is already marked as done:\n  " + t.toString());
