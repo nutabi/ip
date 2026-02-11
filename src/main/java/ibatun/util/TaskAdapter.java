@@ -13,10 +13,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import ibatun.core.tasks.Deadline;
-import ibatun.core.tasks.Event;
-import ibatun.core.tasks.Task;
-import ibatun.core.tasks.Todo;
+import ibatun.tasks.Deadline;
+import ibatun.tasks.Event;
+import ibatun.tasks.Task;
+import ibatun.tasks.Todo;
 
 /**
  * Adapter for serializing and deserializing Task objects with Gson.

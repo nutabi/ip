@@ -1,4 +1,4 @@
-package ibatun.core.tasks;
+package ibatun.tasks;
 
 /**
  * Represents a task with a name and completion status.

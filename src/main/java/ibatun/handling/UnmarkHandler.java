@@ -1,7 +1,7 @@
 package ibatun.handling;
 
 import ibatun.storage.TaskStore;
-import ibatun.core.tasks.Task;
+import ibatun.tasks.Task;
 import ibatun.errors.IbatunException;
 
 /**

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import ibatun.storage.TaskStore;
-import ibatun.core.tasks.Task;
+import ibatun.tasks.Task;
 import ibatun.errors.IbatunException;
 
 final class FindHandler extends Handler {

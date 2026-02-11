@@ -3,7 +3,7 @@ package ibatun.handling;
 import java.util.function.Consumer;
 
 import ibatun.storage.TaskStore;
-import ibatun.core.tasks.Todo;
+import ibatun.tasks.Todo;
 import ibatun.errors.IbatunException;
 
 /**

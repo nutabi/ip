@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-import ibatun.core.tasks.Task;
 import ibatun.errors.IbatunException;
 import ibatun.errors.IbatunTaskNotFoundException;
+import ibatun.tasks.Task;
 
 public abstract class TaskStore {
     protected final List<Task> tasks;

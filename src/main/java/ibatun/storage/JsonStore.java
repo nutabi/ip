@@ -15,9 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import ibatun.core.tasks.Task;
 import ibatun.errors.IbatunException;
 import ibatun.errors.IbatunIOException;
+import ibatun.tasks.Task;
 import ibatun.util.DatetimeAdapter;
 import ibatun.util.TaskAdapter;
 

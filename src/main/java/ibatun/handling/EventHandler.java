@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import ibatun.storage.TaskStore;
-import ibatun.core.tasks.Event;
-import ibatun.core.tasks.Task;
+import ibatun.tasks.Event;
+import ibatun.tasks.Task;
 import ibatun.errors.IbatunException;
 import ibatun.util.ArgTools;
 import ibatun.util.DatetimeConverter;

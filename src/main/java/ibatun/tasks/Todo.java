@@ -1,4 +1,4 @@
-package ibatun.core.tasks;
+package ibatun.tasks;
 
 /**
  * Represents a Todo task. This is a bare implementation of a Task that does not have any additional attributes beyond

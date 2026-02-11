@@ -3,9 +3,9 @@ package ibatun.handling;
 import java.util.List;
 import java.util.function.Consumer;
 
-import ibatun.core.tasks.Task;
 import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
+import ibatun.tasks.Task;
 
 /**
  * Handler for the "list" command, which lists all tasks in the task store.
