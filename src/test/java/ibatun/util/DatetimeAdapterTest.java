@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.time.format.DateTimeParseException;
 
 public class DatetimeAdapterTest {
     private final Gson gson = new GsonBuilder()
