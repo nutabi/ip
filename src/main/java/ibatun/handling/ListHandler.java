@@ -1,9 +1,9 @@
 package ibatun.handling;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.function.Consumer;
 
 import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
