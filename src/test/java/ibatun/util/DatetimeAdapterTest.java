@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
+import java.time.format.DateTimeParseException;
 
 public class DatetimeAdapterTest {
     private final Gson gson = new GsonBuilder()
@@ -39,12 +39,12 @@ public class DatetimeAdapterTest {
     }
 
     @Test
-    public void deserialize_invalidFormat_throwsJsonParseException() {
-        assertThrows(JsonParseException.class, () -> gson.fromJson("\"not-a-date\"", LocalDateTime.class));
+    public void deserialize_invalidFormat_throwsDateTimeParseException() {
+        assertThrows(DateTimeParseException.class, () -> gson.fromJson("\"not-a-date\"", LocalDateTime.class));
     }
 
     @Test
-    public void deserialize_emptyString_throwsJsonParseException() {
-        assertThrows(JsonParseException.class, () -> gson.fromJson("\"\"", LocalDateTime.class));
+    public void deserialize_emptyString_throwsDateTimeParseException() {
+        assertThrows(DateTimeParseException.class, () -> gson.fromJson("\"\"", LocalDateTime.class));
     }
 }
