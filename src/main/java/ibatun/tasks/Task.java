@@ -23,6 +23,8 @@ public abstract sealed class Task permits Todo, Deadline, Event {
      * @param name The name of the task.
      */
     protected Task(String name) {
+        assert name != null : "Task name cannot be null";
+        assert !name.isBlank() : "Task name cannot be blank";
         this.name = name;
         this.isDone = false;
     }

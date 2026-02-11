@@ -18,6 +18,9 @@ public final class Router {
      * @param onRespond The consumer function to handle responses
      */
     public Router(TaskStore store, Consumer<String> onRespond) {
+        assert store != null : "TaskStore cannot be null";
+        assert onRespond != null : "Response handler cannot be null";
+
         this.onRespond = onRespond;
         this.handlers = new Handler[] { new TodoHandler(store, onRespond), new DeadlineHandler(store, onRespond),
             new EventHandler(store, onRespond), new ListHandler(store, onRespond), new MarkHandler(store, onRespond),
