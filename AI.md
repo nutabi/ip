@@ -17,3 +17,8 @@ Used GitHub Copilot to suggest and implement more expressive chatbot responses a
 
 Used GitHub Copilot to design and implement additional error handling for JSON storage,
 including corrupted data detection, user warnings, and recovery flows, plus related tests.
+
+## `A-MoreTesting`
+
+Used GitHub Copilot to review existing test coverage and add tests for JsonStore reload behavior,
+parent directory creation on save, and UserDataPaths file readability and writability.
