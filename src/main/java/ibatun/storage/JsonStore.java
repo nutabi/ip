@@ -13,8 +13,10 @@ import java.util.function.Consumer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import ibatun.errors.IbatunCorruptedDataException;
 import ibatun.errors.IbatunException;
 import ibatun.errors.IbatunFileException;
 import ibatun.tasks.Task;
@@ -43,7 +45,21 @@ public final class JsonStore extends TaskStore {
      * @throws IbatunException if there is an error loading data
      */
     public JsonStore(String targetPath) throws IbatunException {
-        super(loadTasks(targetPath));
+        super(loadTasks(targetPath, false));
+        assert targetPath != null : "Target path cannot be null";
+        assert !targetPath.isBlank() : "Target path cannot be blank";
+        this.targetPath = targetPath;
+    }
+
+    /**
+     * Constructor for JsonStore that can recover from corrupted data.
+     *
+     * @param targetPath         The file path for storing data
+     * @param recoverCorruptData Whether to proceed with empty data if parsing fails
+     * @throws IbatunException if there is an error loading data
+     */
+    public JsonStore(String targetPath, boolean recoverCorruptData) throws IbatunException {
+        super(loadTasks(targetPath, recoverCorruptData));
         assert targetPath != null : "Target path cannot be null";
         assert !targetPath.isBlank() : "Target path cannot be blank";
         this.targetPath = targetPath;
@@ -67,7 +83,7 @@ public final class JsonStore extends TaskStore {
         dumpTasks();
     }
 
-    private static List<Task> loadTasks(String targetPath) throws IbatunException {
+    private static List<Task> loadTasks(String targetPath, boolean recoverCorruptData) throws IbatunException {
         List<Task> tasks = new ArrayList<>();
         // Load existing data
         try {
@@ -82,7 +98,13 @@ public final class JsonStore extends TaskStore {
                     }
                 }
             }
-        } catch (InvalidPathException | IOException | DateTimeParseException e) {
+        } catch (DateTimeParseException | JsonParseException e) {
+            if (recoverCorruptData) {
+                return tasks;
+            }
+            throw new IbatunCorruptedDataException(
+                    "Stored data looks corrupted. If you continue, existing data will be overwritten.");
+        } catch (InvalidPathException | IOException e) {
             throw new IbatunFileException("Failed to load data");
         }
         return tasks;
@@ -91,6 +113,10 @@ public final class JsonStore extends TaskStore {
     private void dumpTasks() throws IbatunException {
         try {
             Path filePath = Paths.get(targetPath);
+            Path parentDir = filePath.getParent();
+            if (parentDir != null) {
+                Files.createDirectories(parentDir);
+            }
             String json = gson.toJson(tasks);
             Files.writeString(filePath, json);
         } catch (InvalidPathException | IOException e) {

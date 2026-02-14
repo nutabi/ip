@@ -1,9 +1,11 @@
 package ibatun.ui;
 
+import ibatun.errors.IbatunCorruptedDataException;
 import ibatun.errors.IbatunException;
 import ibatun.handling.Router;
 import ibatun.storage.JsonStore;
 import ibatun.storage.TaskStore;
+import ibatun.util.UserDataPaths;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,6 +22,8 @@ import javafx.stage.Stage;
  * @version 1.0
  */
 public class IbatunGui extends Application {
+    private static final String APP_NAME = "Ibatun";
+    private static final String DATA_FILE_NAME = "tasks.json";
     private Image ibatunImage;
     private Image userImage;
     private Scene primaryScene;
@@ -34,8 +38,16 @@ public class IbatunGui extends Application {
     public IbatunGui() {
         this.ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));
         this.userImage = new Image(IbatunGui.class.getResourceAsStream("/images/userPic.png"));
+        String dataPath = UserDataPaths.getAppDataFile(APP_NAME, DATA_FILE_NAME).toString();
         try {
-            this.store = new JsonStore("data.local.json");
+            this.store = new JsonStore(dataPath);
+        } catch (IbatunCorruptedDataException e) {
+            handleOnRespond(e.getMessage());
+            try {
+                this.store = new JsonStore(dataPath, true);
+            } catch (IbatunException recoveryException) {
+                handleOnRespond(recoveryException.getMessage());
+            }
         } catch (IbatunException e) {
             handleOnRespond(e.getMessage());
         }
