@@ -95,4 +95,26 @@ public class JsonStoreTest {
         assertTrue(content.contains("\"type\":\"todo\""));
         assertFalse(content.contains("{not valid json"));
     }
+
+    @Test
+    public void constructor_existingFile_loadsTasks() throws Exception {
+        Path filePath = tempDir.resolve("tasks.json");
+        JsonStore store = new JsonStore(filePath.toString());
+        store.add(new Todo("read"));
+
+        JsonStore reloaded = new JsonStore(filePath.toString());
+        assertEquals(1, reloaded.list().size());
+        assertEquals("read", reloaded.get(0).getName());
+        assertFalse(reloaded.get(0).isDone());
+    }
+
+    @Test
+    public void add_nestedPath_createsParentDirs() throws Exception {
+        Path filePath = tempDir.resolve("nested/dir/tasks.json");
+        JsonStore store = new JsonStore(filePath.toString());
+        store.add(new Todo("read"));
+
+        assertTrue(Files.exists(filePath));
+        assertTrue(Files.exists(filePath.getParent()));
+    }
 }
