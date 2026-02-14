@@ -38,20 +38,26 @@ public class DialogBox extends HBox {
         picture.setFitHeight(60.0);
         picture.setFitWidth(60.0);
         picture.setPreserveRatio(true);
+        picture.getStyleClass().add("dialog-avatar");
 
         Circle clip = new Circle(30, 30, 30);
         picture.setClip(clip);
 
         text = new Label(msg);
         text.setWrapText(true);
+        text.setMaxWidth(360.0);
+        text.getStyleClass().add("dialog-text");
 
         this.setSpacing(10.0);
+        this.getStyleClass().add("dialog-box");
 
         if (isUser) {
             this.setAlignment(Pos.TOP_RIGHT);
+            this.getStyleClass().add("dialog-user");
             this.getChildren().addAll(text, picture);
         } else {
             this.setAlignment(Pos.TOP_LEFT);
+            this.getStyleClass().add("dialog-bot");
             this.getChildren().addAll(picture, text);
         }
 
