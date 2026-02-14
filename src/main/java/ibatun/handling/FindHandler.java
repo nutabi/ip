@@ -25,7 +25,7 @@ final class FindHandler extends Handler {
     void handle(String[] args) {
         String[] keywords = Arrays.stream(args).filter(keyword -> !keyword.isBlank()).toArray(String[]::new);
         if (keywords.length == 0) {
-            fail("Please provide at least one keyword to find.");
+            fail("Please provide at least one keyword to find. I am good, not psychic.");
             return;
         }
 
@@ -45,7 +45,7 @@ final class FindHandler extends Handler {
         }
 
         if (matchedTasks.isEmpty()) {
-            succeed("No matching tasks found.");
+            succeed("No matching tasks found. The detective shrugs.");
         } else {
             String header = "Here are the matching tasks in your list:\n";
             String body = IntStream

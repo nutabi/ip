@@ -30,12 +30,12 @@ final class TodoHandler extends Handler {
     @Override
     void handle(String[] args) {
         if (args.length == 0) {
-            fail("The description of a todo cannot be empty.");
+            fail("The description of a todo cannot be empty. Even jokes need punchlines.");
             return;
         }
         String description = String.join(" ", args);
         if (description.isBlank()) {
-            fail("The description of a todo cannot be empty.");
+            fail("The description of a todo cannot be empty. Even jokes need punchlines.");
             return;
         }
 
@@ -47,7 +47,7 @@ final class TodoHandler extends Handler {
             fail(e.getMessage());
             return;
         }
-        succeed("Got it. I've added this todo: " + todo.toString());
+        succeed("Got it. I've added this todo: " + todo.toString() + " (I will nag you later.)");
         return;
     }
 }

@@ -48,7 +48,7 @@ abstract class Handler {
      * @param message The failure message
      */
     protected void fail(String message) {
-        onRespond.accept("Oops! Something went wrong :D\n\n" + message);
+        onRespond.accept("Whoops! I tripped over a semicolon.\n\n" + message);
     }
 
     /**

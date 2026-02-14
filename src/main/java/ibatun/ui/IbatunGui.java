@@ -48,7 +48,7 @@ public class IbatunGui extends Application {
         setupPrimaryScene();
 
         // Greet
-        handleOnRespond("Hello! I'm Ibatun. How can I assist you today?");
+        handleOnRespond("Howdy! I'm Ibatun, your task wrangler with a tiny cape. What chaos are we sorting today?");
 
         primaryStage.setScene(primaryScene);
         primaryStage.show();
@@ -56,7 +56,7 @@ public class IbatunGui extends Application {
 
     private void setupStage(Stage stage) {
         // Set up stage properties here
-        stage.setTitle("Ibatun GUI");
+        stage.setTitle("Ibatun - Task Wrangler");
         stage.setWidth(600);
         stage.setHeight(700);
     }

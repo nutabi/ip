@@ -36,7 +36,7 @@ public final class Router {
      */
     public boolean route(String[] args) {
         if (args.length == 0) {
-            onRespond.accept("No command provided.");
+            onRespond.accept("No command provided. My crystal ball is on break.");
             return true;
         }
 
@@ -53,7 +53,7 @@ public final class Router {
                 return true;
             }
         }
-        onRespond.accept("I'm sorry, but I don't know what that command means.");
+        onRespond.accept("I don't know what that command means. Try again, wizard.");
         return true;
     }
 }

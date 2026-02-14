@@ -37,7 +37,8 @@ final class EventHandler extends Handler {
 
         if (parts.length != 3 || parts[0].isBlank() || parts[1].isBlank() || parts[2].isBlank()) {
             fail("The event command requires a description, start date/time, and end date/time.\n\n"
-                    + "Format: event <description> /from <start date/time> /to <end date/time>");
+                    + "Format: event <description> /from <start date/time> /to <end date/time>\n"
+                    + "I cannot guess your plans... yet.");
             return;
         }
 
@@ -52,7 +53,7 @@ final class EventHandler extends Handler {
         }
 
         if (to.isBefore(from)) {
-            fail("The end time cannot be before the start time.");
+            fail("The end time cannot be before the start time. Unless time travel is involved.");
             return;
         }
 
@@ -63,7 +64,7 @@ final class EventHandler extends Handler {
             fail(e.getMessage());
             return;
         }
-        succeed("Got it. I've added this event: " + newTask.toString());
+        succeed("Got it. I've added this event: " + newTask.toString() + " (Calendar now 1% busier.)");
         return;
     }
 }
