@@ -47,7 +47,7 @@ final class TodoHandler extends Handler {
             fail(e.getMessage());
             return;
         }
-        succeed("Got it. I've added this todo: " + todo.toString() + " (I will nag you later.)");
+        succeed("Got it. I've added this todo:\n    " + todo.toString() + "\nI will nag you later.");
         return;
     }
 }

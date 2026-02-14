@@ -50,7 +50,7 @@ final class FindHandler extends Handler {
             String header = "Here are the matching tasks in your list:\n";
             String body = IntStream
                     .range(0, matchedTasks.size())
-                    .mapToObj(i -> String.format("%d. %s", i + 1, matchedTasks.get(i)))
+                    .mapToObj(i -> String.format("    %d. %s", i + 1, matchedTasks.get(i)))
                     .collect(Collectors.joining("\n"));
             succeed(header + body + "\n");
         }

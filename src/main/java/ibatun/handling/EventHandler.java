@@ -64,7 +64,7 @@ final class EventHandler extends Handler {
             fail(e.getMessage());
             return;
         }
-        succeed("Got it. I've added this event: " + newTask.toString() + " (Calendar now 1% busier.)");
+        succeed("Got it. I've added this event:\n    " + newTask.toString() + "\nCalendar now 1% busier.");
         return;
     }
 }

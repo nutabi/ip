@@ -51,7 +51,7 @@ final class DeadlineHandler extends Handler {
             fail(e.getMessage());
             return;
         }
-        succeed("Got it. I've added this deadline: " + newTask.toString() + " (Time is a flat circle.)");
+        succeed("Got it. I've added this deadline:\n    " + newTask.toString() + "\nTime is a flat circle.");
         return;
     }
 
