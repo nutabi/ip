@@ -1,7 +1,9 @@
 package ibatun.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
@@ -26,14 +28,42 @@ public class DatetimeConverter {
                     // Date (with year, with time)
                     new DateTimeFormatterBuilder()
                             .parseCaseInsensitive()
-                            .appendPattern("yyyy[-]MMM[-]d HH:mm")
+                            .appendPattern("yyyy")
+                            .optionalStart()
+                            .appendLiteral('-')
+                            .optionalEnd()
+                            .optionalStart()
+                            .appendLiteral(' ')
+                            .optionalEnd()
+                            .appendPattern("MMM")
+                            .optionalStart()
+                            .appendLiteral('-')
+                            .optionalEnd()
+                            .optionalStart()
+                            .appendLiteral(' ')
+                            .optionalEnd()
+                            .appendPattern("d HH:mm")
                             .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                             .toFormatter(Locale.ENGLISH),
 
                     // Date (with year, no time)
                     new DateTimeFormatterBuilder()
                             .parseCaseInsensitive()
-                            .appendPattern("yyyy[-]MMM[-]d")
+                            .appendPattern("yyyy")
+                            .optionalStart()
+                            .appendLiteral('-')
+                            .optionalEnd()
+                            .optionalStart()
+                            .appendLiteral(' ')
+                            .optionalEnd()
+                            .appendPattern("MMM")
+                            .optionalStart()
+                            .appendLiteral('-')
+                            .optionalEnd()
+                            .optionalStart()
+                            .appendLiteral(' ')
+                            .optionalEnd()
+                            .appendPattern("d")
                             .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                             .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                             .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
@@ -47,7 +77,7 @@ public class DatetimeConverter {
     /**
      * The formatter for dates in the same month.
      */
-    private static final DateTimeFormatter SAME_MONTH = DateTimeFormatter.ofPattern("d");
+    private static final DateTimeFormatter SAME_MONTH = DateTimeFormatter.ofPattern("MMM d");
 
     /**
      * The formatter for dates in different years.
@@ -62,7 +92,7 @@ public class DatetimeConverter {
     /**
      * The formatter for dates and times in the same month.
      */
-    private static final DateTimeFormatter SAME_MONTH_T = DateTimeFormatter.ofPattern("d 'at' HH:mm");
+    private static final DateTimeFormatter SAME_MONTH_T = DateTimeFormatter.ofPattern("MMM d 'at' HH:mm");
 
     /**
      * The formatter for dates and times in different years.
@@ -91,6 +121,11 @@ public class DatetimeConverter {
         String trimmed = s.trim();
         if (trimmed.isEmpty()) {
             throw new IbatunException("Invalid date/time: " + s);
+        }
+
+        LocalDateTime isoDateTime = parseIsoDateTime(trimmed);
+        if (isoDateTime != null) {
+            return isoDateTime;
         }
 
         LocalDateTime now = LocalDateTime.now();
@@ -139,18 +174,110 @@ public class DatetimeConverter {
     }
 
     private static List<DateTimeFormatter> buildInputFormatters(LocalDateTime now) {
+        DateTimeFormatter monthDayYear = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("MMM")
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("d")
+                .optionalStart()
+                .appendLiteral(',')
+                .optionalEnd()
+                .appendLiteral(' ')
+                .appendPattern("yyyy")
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter(Locale.ENGLISH);
+
+        DateTimeFormatter dayMonthYear = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("d")
+                .optionalStart()
+                .appendLiteral('-')
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("MMM")
+                .optionalStart()
+                .appendLiteral('-')
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("yyyy")
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter(Locale.ENGLISH);
+
+        DateTimeFormatter numericDayFirst = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("d/M/yyyy")
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter(Locale.ENGLISH);
+
+        DateTimeFormatter numericDayFirstDash = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("d-M-yyyy")
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter(Locale.ENGLISH);
+
         DateTimeFormatter noYearWithTime = new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
-                .appendPattern("MMM[-]d HH:mm")
+                .appendPattern("MMM")
+                .optionalStart()
+                .appendLiteral('-')
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("d HH:mm")
                 .parseDefaulting(ChronoField.YEAR, now.getYear())
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
 
         DateTimeFormatter noYearNoTime = new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
-                .appendPattern("MMM[-]d")
+                .appendPattern("MMM")
+                .optionalStart()
+                .appendLiteral('-')
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("d")
                 .parseDefaulting(ChronoField.YEAR, now.getYear())
                 .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .toFormatter(Locale.ENGLISH);
+
+        DateTimeFormatter noYearWithTime12 = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("MMM")
+                .optionalStart()
+                .appendLiteral('-')
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("d ")
+                .appendPattern("h")
+                .optionalStart()
+                .appendPattern(":mm")
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .appendPattern("a")
+                .parseDefaulting(ChronoField.YEAR, now.getYear())
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
@@ -164,8 +291,29 @@ public class DatetimeConverter {
                 .toFormatter(Locale.ENGLISH);
 
         return List
-                .of(STATIC_INPUT_FORMATTERS.get(0), STATIC_INPUT_FORMATTERS.get(1), noYearWithTime, noYearNoTime,
+                .of(STATIC_INPUT_FORMATTERS.get(0), STATIC_INPUT_FORMATTERS.get(1), monthDayYear, dayMonthYear,
+                        numericDayFirst, numericDayFirstDash, noYearWithTime, noYearWithTime12, noYearNoTime,
                         timeOnly24);
+    }
+
+    private static LocalDateTime parseIsoDateTime(String input) {
+        try {
+            return OffsetDateTime.parse(input).toLocalDateTime();
+        } catch (DateTimeParseException e) {
+            // Try next format
+        }
+
+        try {
+            return LocalDateTime.parse(input, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        } catch (DateTimeParseException e) {
+            // Try next format
+        }
+
+        try {
+            return LocalDate.parse(input, DateTimeFormatter.ISO_LOCAL_DATE).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            return null;
+        }
     }
 
     private static LocalDateTime parseTimeOnly(String input, LocalDateTime now) {

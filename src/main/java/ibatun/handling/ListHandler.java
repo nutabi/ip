@@ -43,7 +43,7 @@ final class ListHandler extends Handler {
 
         String body = IntStream
                 .range(0, tasks.size())
-                .mapToObj(i -> (i + 1) + ". " + tasks.get(i))
+                .mapToObj(i -> "    " + (i + 1) + ". " + tasks.get(i))
                 .collect(Collectors.joining("\n"));
         succeed(response.append(body).toString().trim());
     }

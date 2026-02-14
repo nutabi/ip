@@ -30,7 +30,7 @@ final class DeleteHandler extends Handler {
             int taskNum = Integer.parseInt(args[0]) - 1;
             Task t = store.get(taskNum);
             store.remove(taskNum);
-            succeed("Poof. I've removed this task:\n  "
+            succeed("Poof. I've removed this task:\n    "
                     + t.toString()
                     + "\nNow you have "
                     + store.list().size()
