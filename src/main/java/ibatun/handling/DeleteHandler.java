@@ -22,7 +22,7 @@ final class DeleteHandler extends Handler {
     @Override
     void handle(String[] args) {
         if (args.length != 1 || args[0].isBlank()) {
-            fail("Please provide a valid task number.");
+            fail("Please provide a valid task number. I only count on purpose.");
             return;
         }
 
@@ -30,15 +30,15 @@ final class DeleteHandler extends Handler {
             int taskNum = Integer.parseInt(args[0]) - 1;
             Task t = store.get(taskNum);
             store.remove(taskNum);
-            succeed("Noted. I've removed this task:\n  "
+            succeed("Poof. I've removed this task:\n  "
                     + t.toString()
                     + "\nNow you have "
                     + store.list().size()
                     + " tasks in the list.");
         } catch (NumberFormatException e) {
-            fail("Please provide a valid task number.");
+            fail("Please provide a valid task number. I only count on purpose.");
         } catch (IndexOutOfBoundsException e) {
-            fail("Task number out of range.");
+            fail("Task number out of range. My fingers only go so far.");
         } catch (IbatunException e) {
             fail(e);
         }

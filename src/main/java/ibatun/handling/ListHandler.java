@@ -24,7 +24,7 @@ final class ListHandler extends Handler {
 
     @Override
     void handle(String[] args) {
-        StringBuilder response = new StringBuilder("Here are the tasks in your list:\n");
+        StringBuilder response = new StringBuilder("Here are the tasks in your list (drumroll):\n");
 
         // Get task list
         List<Task> tasks;
@@ -37,7 +37,7 @@ final class ListHandler extends Handler {
 
         // Handle empty task list
         if (tasks.isEmpty()) {
-            succeed("You ain't got no task.");
+            succeed("You ain't got no task. Go make some trouble.");
             return;
         }
 

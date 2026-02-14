@@ -31,7 +31,8 @@ final class DeadlineHandler extends Handler {
 
         if (parts.length != 2 || parts[0].isBlank() || parts[1].isBlank()) {
             fail("The deadline command requires a description and a due date/time.\n\n"
-                    + "Format: deadline <description> /by <due date/time>");
+                    + "Format: deadline <description> /by <due date/time>\n"
+                    + "My time machine is out for repairs.");
             return;
         }
 
@@ -50,7 +51,7 @@ final class DeadlineHandler extends Handler {
             fail(e.getMessage());
             return;
         }
-        succeed("Got it. I've added this deadline: " + newTask.toString());
+        succeed("Got it. I've added this deadline: " + newTask.toString() + " (Time is a flat circle.)");
         return;
     }
 

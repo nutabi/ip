@@ -22,7 +22,7 @@ public class InputBar extends HBox {
      */
     public InputBar(Consumer<String> onSend) {
         this.userInput = new TextField();
-        this.sendButton = new Button("Send");
+        this.sendButton = new Button("Send it");
 
         getStyleClass().add("input-bar");
         userInput.getStyleClass().add("input-field");
@@ -31,7 +31,7 @@ public class InputBar extends HBox {
         setSpacing(10.0);
         HBox.setHgrow(userInput, Priority.ALWAYS);
 
-        userInput.setPromptText("Type your message here...");
+        userInput.setPromptText("Type a command... I promise to laugh with you, not at you.");
 
         sendButton
                 .disableProperty()

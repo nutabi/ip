@@ -172,7 +172,7 @@ public class HandlersTest {
         ListHandler handler = new ListHandler(new TestSupport.InMemoryStore(new ArrayList<>()), sink);
 
         handler.handle(new String[] {});
-        assertEquals("You ain't got no task.", sink.last());
+        assertTrue(sink.last().contains("ain't got no task"));
     }
 
     @Test
@@ -205,7 +205,7 @@ public class HandlersTest {
         FindHandler handler = new FindHandler(store, sink);
 
         handler.handle(new String[] { "write" });
-        assertEquals("No matching tasks found.", sink.last());
+        assertTrue(sink.last().contains("No matching tasks found"));
     }
 
     @Test

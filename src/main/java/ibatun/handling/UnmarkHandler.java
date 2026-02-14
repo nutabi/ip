@@ -20,7 +20,7 @@ final class UnmarkHandler extends Handler {
     @Override
     void handle(String[] args) {
         if (args.length != 1 || args[0].isBlank()) {
-            fail("Please provide a valid task number.");
+            fail("Please provide a valid task number. I only count on purpose.");
             return;
         }
 
@@ -32,11 +32,11 @@ final class UnmarkHandler extends Handler {
                 return;
             }
             store.modify(taskNum, Task::unmark);
-            succeed("Nice! I've unmarked this task as done:\n  " + t.toString());
+            succeed("Okay! I've unmarked this task as done:\n  " + t.toString());
         } catch (NumberFormatException e) {
-            fail("Please provide a valid task number.");
+            fail("Please provide a valid task number. I only count on purpose.");
         } catch (IndexOutOfBoundsException e) {
-            fail("Task number out of range.");
+            fail("Task number out of range. My fingers only go so far.");
         } catch (IbatunException e) {
             fail(e);
         }
