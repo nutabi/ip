@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import ibatun.errors.IbatunCorruptedDataException;
 import ibatun.errors.IbatunException;
 import ibatun.tasks.Task;
 import ibatun.tasks.Todo;
@@ -71,5 +72,27 @@ public class JsonStoreTest {
     @Test
     public void constructor_invalidPath_throws() {
         assertThrows(IbatunException.class, () -> new JsonStore("\0"));
+    }
+
+    @Test
+    public void constructor_corruptedData_throwsWarningException() throws Exception {
+        Path filePath = tempDir.resolve("corrupted.json");
+        Files.writeString(filePath, "{not valid json");
+
+        assertThrows(IbatunCorruptedDataException.class, () -> new JsonStore(filePath.toString()));
+    }
+
+    @Test
+    public void constructor_corruptedData_recoverOverwritesOnSave() throws Exception {
+        Path filePath = tempDir.resolve("corrupted.json");
+        Files.writeString(filePath, "{not valid json");
+
+        JsonStore store = new JsonStore(filePath.toString(), true);
+        assertEquals(0, store.list().size());
+
+        store.add(new Todo("read"));
+        String content = Files.readString(filePath);
+        assertTrue(content.contains("\"type\":\"todo\""));
+        assertFalse(content.contains("{not valid json"));
     }
 }
