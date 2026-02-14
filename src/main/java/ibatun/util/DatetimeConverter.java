@@ -47,7 +47,7 @@ public class DatetimeConverter {
     /**
      * The formatter for dates in the same month.
      */
-    private static final DateTimeFormatter SAME_MONTH = DateTimeFormatter.ofPattern("d");
+    private static final DateTimeFormatter SAME_MONTH = DateTimeFormatter.ofPattern("MMM d");
 
     /**
      * The formatter for dates in different years.
@@ -62,7 +62,7 @@ public class DatetimeConverter {
     /**
      * The formatter for dates and times in the same month.
      */
-    private static final DateTimeFormatter SAME_MONTH_T = DateTimeFormatter.ofPattern("d 'at' HH:mm");
+    private static final DateTimeFormatter SAME_MONTH_T = DateTimeFormatter.ofPattern("MMM d 'at' HH:mm");
 
     /**
      * The formatter for dates and times in different years.

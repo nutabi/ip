@@ -161,7 +161,8 @@ public class DatetimeConverterTest {
         int day = NOW.getDayOfMonth() == 1 ? 2 : 1;
         var dt = LocalDateTime.of(NOW.getYear(), NOW.getMonthValue(), day, 0, 0);
         var formatted = format(dt);
-        assertEquals(String.valueOf(day), formatted);
+        var expected = dt.format(java.time.format.DateTimeFormatter.ofPattern("MMM d"));
+        assertEquals(expected, formatted);
     }
 
     @Test
@@ -183,7 +184,8 @@ public class DatetimeConverterTest {
         int day = NOW.getDayOfMonth() == 1 ? 2 : 1;
         var dt = LocalDateTime.of(NOW.getYear(), NOW.getMonthValue(), day, 14, 30);
         var formatted = format(dt);
-        assertEquals(day + " at 14:30", formatted);
+        var expected = dt.format(java.time.format.DateTimeFormatter.ofPattern("MMM d 'at' HH:mm"));
+        assertEquals(expected, formatted);
     }
 
     @Test
