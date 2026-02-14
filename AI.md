@@ -22,3 +22,7 @@ including corrupted data detection, user warnings, and recovery flows, plus rela
 
 Used GitHub Copilot to review existing test coverage and add tests for JsonStore reload behavior,
 parent directory creation on save, and UserDataPaths file readability and writability.
+
+## Final Submission
+
+Used GitHub Copilot to generate the user guide.
