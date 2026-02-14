@@ -32,6 +32,24 @@ public class DatetimeConverterTest {
         assertEquals(dt.getDayOfMonth(), 6);
         assertEquals(dt.getHour(), 12);
         assertEquals(dt.getMinute(), 15);
+
+        var input3 = "2026-02-18T10:15:30";
+        dt = assertDoesNotThrow(() -> parse(input3));
+        assertEquals(dt.getYear(), 2026);
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
+        assertEquals(dt.getHour(), 10);
+        assertEquals(dt.getMinute(), 15);
+        assertEquals(dt.getSecond(), 30);
+
+        var input4 = "2026-02-18T10:15:30+08:00";
+        dt = assertDoesNotThrow(() -> parse(input4));
+        assertEquals(dt.getYear(), 2026);
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
+        assertEquals(dt.getHour(), 10);
+        assertEquals(dt.getMinute(), 15);
+        assertEquals(dt.getSecond(), 30);
     }
 
     @Test
@@ -49,6 +67,38 @@ public class DatetimeConverterTest {
         assertEquals(dt.getYear(), 2026);
         assertEquals(dt.getMonthValue(), 1);
         assertEquals(dt.getDayOfMonth(), 6);
+        assertEquals(dt.getHour(), 0);
+        assertEquals(dt.getMinute(), 0);
+
+        var input3 = "2026-02-18";
+        dt = assertDoesNotThrow(() -> parse(input3));
+        assertEquals(dt.getYear(), 2026);
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
+        assertEquals(dt.getHour(), 0);
+        assertEquals(dt.getMinute(), 0);
+
+        var input4 = "Feb 18, 2026";
+        dt = assertDoesNotThrow(() -> parse(input4));
+        assertEquals(dt.getYear(), 2026);
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
+        assertEquals(dt.getHour(), 0);
+        assertEquals(dt.getMinute(), 0);
+
+        var input5 = "18 Feb 2026";
+        dt = assertDoesNotThrow(() -> parse(input5));
+        assertEquals(dt.getYear(), 2026);
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
+        assertEquals(dt.getHour(), 0);
+        assertEquals(dt.getMinute(), 0);
+
+        var input6 = "18/2/2026";
+        dt = assertDoesNotThrow(() -> parse(input6));
+        assertEquals(dt.getYear(), 2026);
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
         assertEquals(dt.getHour(), 0);
         assertEquals(dt.getMinute(), 0);
     }
@@ -70,6 +120,14 @@ public class DatetimeConverterTest {
         assertEquals(dt.getDayOfMonth(), 6);
         assertEquals(dt.getHour(), 12);
         assertEquals(dt.getMinute(), 15);
+
+        var input3 = "feb 18 6pm";
+        dt = assertDoesNotThrow(() -> parse(input3));
+        assertEquals(dt.getYear(), NOW.getYear());
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
+        assertEquals(dt.getHour(), 18);
+        assertEquals(dt.getMinute(), 0);
     }
 
     @Test
@@ -87,6 +145,14 @@ public class DatetimeConverterTest {
         assertEquals(dt.getYear(), NOW.getYear());
         assertEquals(dt.getMonthValue(), 1);
         assertEquals(dt.getDayOfMonth(), 6);
+        assertEquals(dt.getHour(), 0);
+        assertEquals(dt.getMinute(), 0);
+
+        var input3 = "Feb 18";
+        dt = assertDoesNotThrow(() -> parse(input3));
+        assertEquals(dt.getYear(), NOW.getYear());
+        assertEquals(dt.getMonthValue(), 2);
+        assertEquals(dt.getDayOfMonth(), 18);
         assertEquals(dt.getHour(), 0);
         assertEquals(dt.getMinute(), 0);
     }
@@ -136,12 +202,15 @@ public class DatetimeConverterTest {
 
     @Test
     public void parse_invalidInput_throws() {
-        String[] invalidStrings = { "15-Mar-2024", // Wrong format
-            "2024/03/15", // Wrong format
-            "March 15, 2024", // Wrong format
+        String[] invalidStrings = { "2026-13-01", // Invalid month
+            "2026-02-30", // Invalid day
+            "2026-02-28T25:00:00", // Invalid hour
+            "2026-02-28T10:61:00", // Invalid minute
+            "Jan 32, 2026", // Invalid day
+            "32 Jan 2026", // Invalid day
+            "99/99/9999", // Invalid month/day
             "14:60", // Invalid minute
             "25:00", // Invalid hour
-            "2024-Mar-32", // Invalid day
             "abcd-ef-gh" // Nonsense
         };
         for (String input : invalidStrings) {
