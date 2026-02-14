@@ -53,6 +53,14 @@ shadowJar {
     archiveClassifier = null
 }
 
+jar {
+    enabled = false
+}
+
+assemble {
+    dependsOn shadowJar
+}
+
 run {
     standardInput = System.in
 }
