@@ -1,5 +1,6 @@
 package ibatun.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,5 +25,20 @@ public class UserDataPathsTest {
         assertTrue(Files.isWritable(probeFile));
 
         Files.deleteIfExists(probeFile);
+    }
+
+    @Test
+    public void getAppDataFile_usesAppNameAndFileName() throws Exception {
+        Path filePath = UserDataPaths.getAppDataFile("IbatunTest", "tasks.json");
+        assertNotNull(filePath);
+        assertEquals("tasks.json", filePath.getFileName().toString());
+        assertEquals("IbatunTest", filePath.getParent().getFileName().toString());
+
+        Files.createDirectories(filePath.getParent());
+        Files.writeString(filePath, "ok");
+        assertTrue(Files.isReadable(filePath));
+        assertTrue(Files.isWritable(filePath));
+
+        Files.deleteIfExists(filePath);
     }
 }
