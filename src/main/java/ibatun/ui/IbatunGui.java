@@ -7,11 +7,8 @@ import ibatun.storage.TaskStore;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -29,6 +26,7 @@ public class IbatunGui extends Application {
     private VBox viewBox;
     private TaskStore store;
     private Router router;
+    private InputBar inputBar;
 
     /**
      * Constructs the Ibatun GUI application.
@@ -67,17 +65,18 @@ public class IbatunGui extends Application {
         Node viewBoxNode = setupViewBox();
         Node inputBox = setupInputBox();
         VBox root = new VBox(viewBoxNode, inputBox);
-        root.setStyle("-fx-padding: 10;");
+        root.getStyleClass().add("app-root");
         VBox.setVgrow(viewBoxNode, Priority.ALWAYS);
 
         primaryScene = new Scene(root);
+        primaryScene.getStylesheets().add(IbatunGui.class.getResource("/ibatun/ui/ibatun.css").toExternalForm());
     }
 
     private Node setupViewBox() {
         viewBox = new VBox();
-        viewBox.setStyle("-fx-padding: 10; -fx-spacing: 10;");
+        viewBox.getStyleClass().add("chat-view");
         ScrollPane scrollPane = new ScrollPane(viewBox);
-        scrollPane.setStyle("-fx-control-inner-background: #f5f5f5;");
+        scrollPane.getStyleClass().add("chat-scroll");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
 
@@ -88,31 +87,8 @@ public class IbatunGui extends Application {
     }
 
     private Node setupInputBox() {
-        TextField userInput = new TextField();
-        userInput.setPromptText("Type your message here...");
-        userInput.setStyle("-fx-padding: 8; -fx-font-size: 14;");
-        userInput.setOnAction(event -> {
-            String command = userInput.getText();
-            if (!command.trim().isEmpty()) {
-                handleOnSend(command);
-                userInput.clear();
-            }
-        });
-
-        Button sendButton = new Button("Send");
-        sendButton.setStyle("-fx-padding: 8 20; -fx-font-size: 14; -fx-min-width: 70;");
-        sendButton.setOnAction(event -> {
-            String command = userInput.getText();
-            if (!command.trim().isEmpty()) {
-                handleOnSend(command);
-                userInput.clear();
-            }
-        });
-
-        HBox inputBox = new HBox(userInput, sendButton);
-        inputBox.setStyle("-fx-padding: 10; -fx-spacing: 10;");
-        HBox.setHgrow(userInput, Priority.ALWAYS);
-        return inputBox;
+        inputBar = new InputBar(this::handleOnSend);
+        return inputBar;
     }
 
     private void handleOnRespond(String response) {
