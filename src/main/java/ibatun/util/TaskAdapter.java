@@ -19,7 +19,7 @@ import ibatun.tasks.Task;
 import ibatun.tasks.Todo;
 
 /**
- * Adapter for serializing and deserializing Task objects with Gson.
+ * Adapts Task objects for serialization and deserialization with Gson.
  *
  * @author Binh
  * @version 1.0

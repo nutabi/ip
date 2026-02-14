@@ -13,12 +13,12 @@ import ibatun.util.DatetimeConverter;
  */
 public final class Event extends Task {
     /**
-     * The start time of the event.
+     * Start time of the event.
      */
     private LocalDateTime from;
 
     /**
-     * The end time of the event.
+     * End time of the event.
      */
     private LocalDateTime to;
 

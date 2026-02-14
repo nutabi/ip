@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * The graphical user interface for the Ibatun application.
+ * Provides the graphical user interface for the Ibatun application.
  *
  * @author Binh
  * @version 1.0
@@ -33,7 +33,7 @@ public class IbatunGui extends Application {
     private InputBar inputBar;
 
     /**
-     * Constructs the Ibatun GUI application.
+     * Constructs an IbatunGui application.
      */
     public IbatunGui() {
         this.ibatunImage = new Image(IbatunGui.class.getResourceAsStream("/images/ibatunPic.png"));

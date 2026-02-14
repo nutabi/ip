@@ -9,7 +9,7 @@ import ibatun.errors.IbatunTaskNotFoundException;
 import ibatun.tasks.Task;
 
 /**
- * In-memory store for tasks.
+ * Stores tasks in memory.
  */
 public class TaskStore {
     protected final List<Task> tasks;
@@ -21,7 +21,7 @@ public class TaskStore {
     }
 
     /**
-     * Get a task by its index.
+     * Gets a task by its index.
      *
      * @param index The index of the task
      * @return The task at the specified index
@@ -35,7 +35,7 @@ public class TaskStore {
     }
 
     /**
-     * List all tasks.
+     * Lists all tasks.
      *
      * @return A read-only list of all tasks
      * @throws IbatunException if there is an error retrieving the list
@@ -45,7 +45,7 @@ public class TaskStore {
     }
 
     /**
-     * Add a new task.
+     * Adds a new task.
      *
      * @param task The task to add
      * @throws IbatunException if there is an error adding the task
@@ -56,7 +56,7 @@ public class TaskStore {
     }
 
     /**
-     * Remove a task by its index.
+     * Removes a task by its index.
      *
      * @param index The index of the task to remove
      * @throws IbatunException if there is an error removing the task
@@ -69,7 +69,7 @@ public class TaskStore {
     }
 
     /**
-     * Modify a task by its index using the provided modifier.
+     * Modifies a task by its index using the provided modifier.
      *
      * @param index    The index of the task to modify
      * @param modifier The modifier to apply to the task

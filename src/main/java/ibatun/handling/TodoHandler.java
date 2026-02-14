@@ -7,13 +7,13 @@ import ibatun.storage.TaskStore;
 import ibatun.tasks.Todo;
 
 /**
- * A handler for creating {@code Todo} tasks.
+ * Handles creation of {@code Todo} tasks.
  *
  * @see Todo
  */
 final class TodoHandler extends Handler {
     /**
-     * Constructor for TodoHandler.
+     * Constructs a TodoHandler.
      *
      * @param store     The task store
      * @param onRespond The consumer function to handle responses

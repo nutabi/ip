@@ -11,11 +11,17 @@ import ibatun.util.ArgTools;
 import ibatun.util.DatetimeConverter;
 
 /**
- * A handler for creating {@code Deadline} tasks.
+ * Handles creation of {@code Deadline} tasks.
  *
  * @see Deadline
  */
 final class DeadlineHandler extends Handler {
+    /**
+     * Constructs a DeadlineHandler.
+     *
+     * @param store     The task store
+     * @param onRespond The consumer function to handle responses
+     */
     DeadlineHandler(TaskStore store, Consumer<String> onRespond) {
         super(store, onRespond);
     }

@@ -28,7 +28,7 @@ import ibatun.util.TaskAdapter;
  */
 public final class JsonStore extends TaskStore {
     /**
-     * The Gson instance for JSON serialisation and deserialisation.
+     * Gson instance for JSON serialisation and deserialisation.
      */
     private static final Gson gson = new GsonBuilder()
             .registerTypeHierarchyAdapter(Task.class, new TaskAdapter())
@@ -38,7 +38,7 @@ public final class JsonStore extends TaskStore {
     private final String targetPath;
 
     /**
-     * Constructor for JsonStore.
+     * Constructs a JsonStore.
      *
      * @param targetPath The file path for storing data
      * @param onRespond  The callback to respond to the user
@@ -52,7 +52,7 @@ public final class JsonStore extends TaskStore {
     }
 
     /**
-     * Constructor for JsonStore that can recover from corrupted data.
+     * Constructs a JsonStore that can recover from corrupted data.
      *
      * @param targetPath         The file path for storing data
      * @param recoverCorruptData Whether to proceed with empty data if parsing fails

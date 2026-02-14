@@ -13,7 +13,7 @@ import ibatun.util.DatetimeConverter;
  */
 public final class Deadline extends Task {
     /**
-     * The due date and time of the deadline.
+     * Due date and time of the deadline.
      */
     private LocalDateTime by;
 

@@ -1,11 +1,11 @@
 package ibatun.errors;
 
 /**
- * Exception thrown when an I/O error occurs in the Ibatun application.
+ * Thrown when an I/O error occurs in the Ibatun application.
  */
 public class IbatunFileException extends IbatunException {
     /**
-     * Constructs a new IbatunFileException with the specified detail message.
+     * Constructs an IbatunFileException with the specified detail message.
      *
      * @param message The detail message
      */

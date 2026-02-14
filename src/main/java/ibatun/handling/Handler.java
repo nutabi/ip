@@ -6,21 +6,21 @@ import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 
 /**
- * An abstract handler class that provides a structure for handling commands and responses.
+ * Provides an abstract structure for handling commands and responses.
  */
 abstract class Handler {
     /**
-     * The task store for managing tasks.
+     * Task store for managing tasks.
      */
     protected final TaskStore store;
 
     /**
-     * The consumer function to handle responses.
+     * Consumer function to handle responses.
      */
     private final Consumer<String> onRespond;
 
     /**
-     * Constructs a Handler with the specified task store and response handler.
+     * Constructs a Handler.
      *
      * @param store     The task store
      * @param onRespond The consumer function to handle responses

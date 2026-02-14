@@ -5,9 +5,15 @@ import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
 
 /**
- * Handler for the "mark" command, which marks a task as done.
+ * Handles the "mark" command, which marks a task as done.
  */
 final class MarkHandler extends Handler {
+    /**
+     * Constructs a MarkHandler.
+     *
+     * @param store     The task store
+     * @param onRespond The consumer function to handle responses
+     */
     MarkHandler(TaskStore store, java.util.function.Consumer<String> onRespond) {
         super(store, onRespond);
     }

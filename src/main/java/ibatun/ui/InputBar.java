@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 /**
- * Input bar for sending commands to the app.
+ * Provides an input bar for sending commands to the app.
  */
 public class InputBar extends HBox {
     private final TextField userInput;

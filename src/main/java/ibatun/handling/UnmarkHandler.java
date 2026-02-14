@@ -5,9 +5,15 @@ import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
 
 /**
- * Handler for the "unmark" command, which unmarks a task as not done.
+ * Handles the "unmark" command, which unmarks a task as not done.
  */
 final class UnmarkHandler extends Handler {
+    /**
+     * Constructs an UnmarkHandler.
+     *
+     * @param store     The task store
+     * @param onRespond The consumer function to handle responses
+     */
     UnmarkHandler(TaskStore store, java.util.function.Consumer<String> onRespond) {
         super(store, onRespond);
     }

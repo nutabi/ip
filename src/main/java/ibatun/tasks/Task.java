@@ -8,7 +8,7 @@ package ibatun.tasks;
  */
 public abstract sealed class Task permits Todo, Deadline, Event {
     /**
-     * The name of the task.
+     * Name of the task.
      */
     protected String name;
 
@@ -18,7 +18,7 @@ public abstract sealed class Task permits Todo, Deadline, Event {
     protected boolean isDone;
 
     /**
-     * Constructor for Task.
+     * Constructs a Task.
      *
      * @param name The name of the task.
      */

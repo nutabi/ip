@@ -10,7 +10,7 @@ package ibatun.tasks;
  */
 public final class Todo extends Task {
     /**
-     * Constructor for Todo.
+     * Constructs a Todo.
      *
      * @param name The name of the todo task.
      */

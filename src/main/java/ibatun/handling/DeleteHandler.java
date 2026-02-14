@@ -7,9 +7,15 @@ import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
 
 /**
- * Handler for the "delete" command, which deletes a task from the task store.
+ * Handles the "delete" command, which deletes a task from the task store.
  */
 final class DeleteHandler extends Handler {
+    /**
+     * Constructs a DeleteHandler.
+     *
+     * @param store     The task store
+     * @param onRespond The consumer function to handle responses
+     */
     DeleteHandler(TaskStore store, Consumer<String> onRespond) {
         super(store, onRespond);
     }

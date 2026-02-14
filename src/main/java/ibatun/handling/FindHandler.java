@@ -11,7 +11,17 @@ import ibatun.errors.IbatunException;
 import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
 
+/**
+ * Handles the "find" command, which searches for tasks matching given keywords. Uses fuzzy matching with Levenshtein
+ * distance to find similar task names.
+ */
 final class FindHandler extends Handler {
+    /**
+     * Constructs a FindHandler.
+     *
+     * @param store     The task store
+     * @param onRespond The consumer function to handle responses
+     */
     FindHandler(TaskStore store, Consumer<String> onRespond) {
         super(store, onRespond);
     }

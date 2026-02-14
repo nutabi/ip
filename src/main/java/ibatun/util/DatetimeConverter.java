@@ -21,7 +21,7 @@ import ibatun.errors.IbatunException;
  */
 public class DatetimeConverter {
     /**
-     * The list of input date/time formatters that do not depend on the current date.
+     * List of input date/time formatters that do not depend on the current date.
      */
     private static final List<DateTimeFormatter> STATIC_INPUT_FORMATTERS = List
             .of(
@@ -70,37 +70,37 @@ public class DatetimeConverter {
                             .toFormatter(Locale.ENGLISH));
 
     /**
-     * The formatter for dates in the same year.
+     * Formatter for dates in the same year.
      */
     private static final DateTimeFormatter SAME_YEAR = DateTimeFormatter.ofPattern("MMM d");
 
     /**
-     * The formatter for dates in the same month.
+     * Formatter for dates in the same month.
      */
     private static final DateTimeFormatter SAME_MONTH = DateTimeFormatter.ofPattern("MMM d");
 
     /**
-     * The formatter for dates in different years.
+     * Formatter for dates in different years.
      */
     private static final DateTimeFormatter DIFFERENT_YEAR = DateTimeFormatter.ofPattern("MMM d, yyyy");
 
     /**
-     * The formatter for dates and times in the same year.
+     * Formatter for dates and times in the same year.
      */
     private static final DateTimeFormatter SAME_YEAR_T = DateTimeFormatter.ofPattern("MMM d 'at' HH:mm");
 
     /**
-     * The formatter for dates and times in the same month.
+     * Formatter for dates and times in the same month.
      */
     private static final DateTimeFormatter SAME_MONTH_T = DateTimeFormatter.ofPattern("MMM d 'at' HH:mm");
 
     /**
-     * The formatter for dates and times in different years.
+     * Formatter for dates and times in different years.
      */
     private static final DateTimeFormatter DIFFERENT_YEAR_T = DateTimeFormatter.ofPattern("MMM d, yyyy 'at' HH:mm");
 
     /**
-     * The formatter for times on the same date.
+     * Formatter for times on the same date.
      */
     private static final DateTimeFormatter SAME_DATE_T = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -157,24 +157,52 @@ public class DatetimeConverter {
      */
     public static String format(LocalDateTime dateTime) {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter;
-        boolean includeTime = dateTime.getHour() != 0 || dateTime.getMinute() != 0 || dateTime.getSecond() != 0;
-        if (dateTime.getYear() == now.getYear()
-                && dateTime.getMonth() == now.getMonth()
-                && dateTime.getDayOfMonth() == now.getDayOfMonth()) {
-            formatter = SAME_DATE_T;
-        } else if (dateTime.getYear() == now.getYear() && dateTime.getMonth() == now.getMonth()) {
-            formatter = includeTime ? SAME_MONTH_T : SAME_MONTH;
-        } else if (dateTime.getYear() == now.getYear()) {
-            formatter = includeTime ? SAME_YEAR_T : SAME_YEAR;
-        } else {
-            formatter = includeTime ? DIFFERENT_YEAR_T : DIFFERENT_YEAR;
-        }
+        boolean includeTime = hasTimeComponent(dateTime);
+        DateTimeFormatter formatter = selectFormatter(dateTime, now, includeTime);
         return dateTime.format(formatter);
     }
 
+    private static boolean hasTimeComponent(LocalDateTime dateTime) {
+        return dateTime.getHour() != 0 || dateTime.getMinute() != 0 || dateTime.getSecond() != 0;
+    }
+
+    private static DateTimeFormatter selectFormatter(LocalDateTime dateTime, LocalDateTime now, boolean includeTime) {
+        if (isSameDate(dateTime, now)) {
+            return SAME_DATE_T;
+        } else if (isSameYearAndMonth(dateTime, now)) {
+            return includeTime ? SAME_MONTH_T : SAME_MONTH;
+        } else if (isSameYear(dateTime, now)) {
+            return includeTime ? SAME_YEAR_T : SAME_YEAR;
+        } else {
+            return includeTime ? DIFFERENT_YEAR_T : DIFFERENT_YEAR;
+        }
+    }
+
+    private static boolean isSameDate(LocalDateTime dateTime, LocalDateTime now) {
+        return dateTime.getYear() == now.getYear()
+                && dateTime.getMonth() == now.getMonth()
+                && dateTime.getDayOfMonth() == now.getDayOfMonth();
+    }
+
+    private static boolean isSameYearAndMonth(LocalDateTime dateTime, LocalDateTime now) {
+        return dateTime.getYear() == now.getYear() && dateTime.getMonth() == now.getMonth();
+    }
+
+    private static boolean isSameYear(LocalDateTime dateTime, LocalDateTime now) {
+        return dateTime.getYear() == now.getYear();
+    }
+
     private static List<DateTimeFormatter> buildInputFormatters(LocalDateTime now) {
-        DateTimeFormatter monthDayYear = new DateTimeFormatterBuilder()
+        return List
+                .of(STATIC_INPUT_FORMATTERS.get(0), STATIC_INPUT_FORMATTERS.get(1), buildMonthDayYearFormatter(),
+                        buildDayMonthYearFormatter(), buildNumericDayFirstFormatter(),
+                        buildNumericDayFirstDashFormatter(), buildNoYearWithTimeFormatter(now),
+                        buildNoYearWithTime12Formatter(now), buildNoYearNoTimeFormatter(now),
+                        buildTimeOnly24Formatter(now));
+    }
+
+    private static DateTimeFormatter buildMonthDayYearFormatter() {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("MMM")
                 .optionalStart()
@@ -190,8 +218,10 @@ public class DatetimeConverter {
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter dayMonthYear = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildDayMonthYearFormatter() {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("d")
                 .optionalStart()
@@ -212,24 +242,30 @@ public class DatetimeConverter {
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter numericDayFirst = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildNumericDayFirstFormatter() {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("d/M/yyyy")
                 .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter numericDayFirstDash = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildNumericDayFirstDashFormatter() {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("d-M-yyyy")
                 .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter noYearWithTime = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildNoYearWithTimeFormatter(LocalDateTime now) {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("MMM")
                 .optionalStart()
@@ -242,8 +278,10 @@ public class DatetimeConverter {
                 .parseDefaulting(ChronoField.YEAR, now.getYear())
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter noYearNoTime = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildNoYearNoTimeFormatter(LocalDateTime now) {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("MMM")
                 .optionalStart()
@@ -258,8 +296,10 @@ public class DatetimeConverter {
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter noYearWithTime12 = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildNoYearWithTime12Formatter(LocalDateTime now) {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("MMM")
                 .optionalStart()
@@ -281,19 +321,16 @@ public class DatetimeConverter {
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter timeOnly24 = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildTimeOnly24Formatter(LocalDateTime now) {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("HH:mm")
                 .parseDefaulting(ChronoField.YEAR, now.getYear())
                 .parseDefaulting(ChronoField.MONTH_OF_YEAR, now.getMonthValue())
                 .parseDefaulting(ChronoField.DAY_OF_MONTH, now.getDayOfMonth())
                 .toFormatter(Locale.ENGLISH);
-
-        return List
-                .of(STATIC_INPUT_FORMATTERS.get(0), STATIC_INPUT_FORMATTERS.get(1), monthDayYear, dayMonthYear,
-                        numericDayFirst, numericDayFirstDash, noYearWithTime, noYearWithTime12, noYearNoTime,
-                        timeOnly24);
     }
 
     private static LocalDateTime parseIsoDateTime(String input) {
@@ -317,7 +354,21 @@ public class DatetimeConverter {
     }
 
     private static LocalDateTime parseTimeOnly(String input, LocalDateTime now) {
-        DateTimeFormatter time12 = new DateTimeFormatterBuilder()
+        List<DateTimeFormatter> formatters = List.of(buildTime12Formatter(), buildTime12CompactFormatter());
+
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                LocalTime parsed = LocalTime.parse(input, formatter);
+                return adjustToFutureTime(now, parsed);
+            } catch (DateTimeParseException e) {
+                // Try next formatter
+            }
+        }
+        return null;
+    }
+
+    private static DateTimeFormatter buildTime12Formatter() {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("h")
                 .optionalStart()
@@ -329,8 +380,10 @@ public class DatetimeConverter {
                 .appendPattern("a")
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        DateTimeFormatter time12Compact = new DateTimeFormatterBuilder()
+    private static DateTimeFormatter buildTime12CompactFormatter() {
+        return new DateTimeFormatterBuilder()
                 .parseCaseInsensitive()
                 .appendPattern("h")
                 .optionalStart()
@@ -339,49 +392,51 @@ public class DatetimeConverter {
                 .appendPattern("a")
                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                 .toFormatter(Locale.ENGLISH);
+    }
 
-        for (DateTimeFormatter formatter : List.of(time12, time12Compact)) {
-            try {
-                LocalTime parsed = LocalTime.parse(input, formatter);
-                LocalDateTime candidate = now
-                        .withHour(parsed.getHour())
-                        .withMinute(parsed.getMinute())
-                        .withSecond(0)
-                        .withNano(0);
-                if (!candidate.isAfter(now)) {
-                    candidate = candidate.plusDays(1);
-                }
-                return candidate;
-            } catch (DateTimeParseException e) {
-                // Try next formatter
-            }
+    private static LocalDateTime adjustToFutureTime(LocalDateTime now, LocalTime parsed) {
+        LocalDateTime candidate = now
+                .withHour(parsed.getHour())
+                .withMinute(parsed.getMinute())
+                .withSecond(0)
+                .withNano(0);
+        if (!candidate.isAfter(now)) {
+            candidate = candidate.plusDays(1);
         }
-        return null;
+        return candidate;
     }
 
     private static LocalDateTime parseWeekday(String input, LocalDateTime now) {
         String lower = input.trim().toLowerCase(Locale.ENGLISH);
-        java.time.DayOfWeek target = null;
-        if (lower.equals("mon") || lower.equals("monday")) {
-            target = java.time.DayOfWeek.MONDAY;
-        } else if (lower.equals("tue") || lower.equals("tues") || lower.equals("tuesday")) {
-            target = java.time.DayOfWeek.TUESDAY;
-        } else if (lower.equals("wed") || lower.equals("weds") || lower.equals("wednesday")) {
-            target = java.time.DayOfWeek.WEDNESDAY;
-        } else if (lower.equals("thu") || lower.equals("thur") || lower.equals("thurs") || lower.equals("thursday")) {
-            target = java.time.DayOfWeek.THURSDAY;
-        } else if (lower.equals("fri") || lower.equals("friday")) {
-            target = java.time.DayOfWeek.FRIDAY;
-        } else if (lower.equals("sat") || lower.equals("saturday")) {
-            target = java.time.DayOfWeek.SATURDAY;
-        } else if (lower.equals("sun") || lower.equals("sunday")) {
-            target = java.time.DayOfWeek.SUNDAY;
-        }
+        java.time.DayOfWeek target = getTargetDayOfWeek(lower);
 
         if (target == null) {
             return null;
         }
 
+        return calculateNextOccurrence(now, target);
+    }
+
+    private static java.time.DayOfWeek getTargetDayOfWeek(String lower) {
+        if (lower.equals("mon") || lower.equals("monday")) {
+            return java.time.DayOfWeek.MONDAY;
+        } else if (lower.equals("tue") || lower.equals("tues") || lower.equals("tuesday")) {
+            return java.time.DayOfWeek.TUESDAY;
+        } else if (lower.equals("wed") || lower.equals("weds") || lower.equals("wednesday")) {
+            return java.time.DayOfWeek.WEDNESDAY;
+        } else if (lower.equals("thu") || lower.equals("thur") || lower.equals("thurs") || lower.equals("thursday")) {
+            return java.time.DayOfWeek.THURSDAY;
+        } else if (lower.equals("fri") || lower.equals("friday")) {
+            return java.time.DayOfWeek.FRIDAY;
+        } else if (lower.equals("sat") || lower.equals("saturday")) {
+            return java.time.DayOfWeek.SATURDAY;
+        } else if (lower.equals("sun") || lower.equals("sunday")) {
+            return java.time.DayOfWeek.SUNDAY;
+        }
+        return null;
+    }
+
+    private static LocalDateTime calculateNextOccurrence(LocalDateTime now, java.time.DayOfWeek target) {
         int today = now.getDayOfWeek().getValue();
         int desired = target.getValue();
         int daysUntil = (desired - today + 7) % 7;

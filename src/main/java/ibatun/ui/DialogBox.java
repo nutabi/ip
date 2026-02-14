@@ -10,7 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
 /**
- * A dialog box consisting of an ImageView to represent the speaker's face and a label containing text from the speaker.
+ * Represents a dialog box consisting of an ImageView to represent the speaker's face and a label containing text from
+ * the speaker.
  */
 public class DialogBox extends HBox {
     private ImageView picture;

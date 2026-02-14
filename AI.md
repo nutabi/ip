@@ -23,6 +23,18 @@ including corrupted data detection, user warnings, and recovery flows, plus rela
 Used GitHub Copilot to review existing test coverage and add tests for JsonStore reload behavior,
 parent directory creation on save, and UserDataPaths file readability and writability.
 
+## Code Quality Improvements
+
+Used GitHub Copilot (Claude Sonnet 4.5) to:
+- Analyze codebase for methods that are too long (>20-30 lines)
+- Refactor long methods in DatetimeConverter into smaller, focused helper methods
+- Fix all Javadoc comments to follow proper conventions:
+  - Changed summary lines to start with singular verbs instead of base form verbs
+  - Changed constructor Javadocs from "Constructor for X" to "Constructs X"
+  - Changed class descriptions to start with verbs instead of nouns or articles
+  - Removed "The" prefix from field descriptions
+- Verified all changes with tests and checkstyle validation
+
 ## Final Submission
 
 Used GitHub Copilot to generate the user guide.

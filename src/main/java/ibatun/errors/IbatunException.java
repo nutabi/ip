@@ -8,7 +8,7 @@ package ibatun.errors;
  */
 public class IbatunException extends Exception {
     /**
-     * Constructor for IbatunException.
+     * Constructs an IbatunException.
      *
      * @param message The error message
      */

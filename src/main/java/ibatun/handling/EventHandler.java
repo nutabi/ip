@@ -11,13 +11,13 @@ import ibatun.util.ArgTools;
 import ibatun.util.DatetimeConverter;
 
 /**
- * A handler for creating {@code Event} tasks.
+ * Handles creation of {@code Event} tasks.
  *
  * @see Event
  */
 final class EventHandler extends Handler {
     /**
-     * Constructor for EventHandler.
+     * Constructs an EventHandler.
      *
      * @param store     The task store
      * @param onRespond The consumer function to handle responses

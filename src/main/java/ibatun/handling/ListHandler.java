@@ -10,9 +10,15 @@ import ibatun.storage.TaskStore;
 import ibatun.tasks.Task;
 
 /**
- * Handler for the "list" command, which lists all tasks in the task store.
+ * Handles the "list" command, which lists all tasks in the task store.
  */
 final class ListHandler extends Handler {
+    /**
+     * Constructs a ListHandler.
+     *
+     * @param store     The task store
+     * @param onRespond The consumer function to handle responses
+     */
     ListHandler(TaskStore store, Consumer<String> onRespond) {
         super(store, onRespond);
     }

@@ -6,14 +6,14 @@ import java.util.function.Consumer;
 import ibatun.storage.TaskStore;
 
 /**
- * A router class for directing commands to appropriate handlers.
+ * Routes commands to appropriate handlers.
  */
 public final class Router {
     private final Consumer<String> onRespond;
     private final Handler[] handlers;
 
     /**
-     * Constructor for Router.
+     * Constructs a Router.
      *
      * @param store     The task store
      * @param onRespond The consumer function to handle responses

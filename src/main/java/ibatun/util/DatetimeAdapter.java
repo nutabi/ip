@@ -12,7 +12,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 /**
- * Adapter for serializing and deserializing LocalDateTime objects with Gson.
+ * Adapts LocalDateTime objects for serialization and deserialization with Gson.
  *
  * @author Binh
  * @version 1.0
